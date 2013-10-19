@@ -6,6 +6,4 @@ class User
 
   key :email, String, required: true, unique: true
   key :password_digest, String
-
-  attr_accessible :password_confirmation
 end
