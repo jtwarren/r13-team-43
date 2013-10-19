@@ -25,6 +25,7 @@ end
 
 group :development do
   gem 'thin'
+  gem 'pry'
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
