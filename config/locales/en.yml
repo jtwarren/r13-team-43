@@ -1,4 +1,9 @@
 en:
+  groups:
+    create_challenge:
+      title: 'i challenge you to ...'
+      title_placeholder: 'Enter your challenge'
+
   users:
     create:
       success: 'Thank you for signing up!'

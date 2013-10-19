@@ -13,6 +13,7 @@ Challengeme::Application.routes.draw do
   resources :users
   resources :sessions
   resources :groups
+  resources :challenges
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

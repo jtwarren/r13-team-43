@@ -3,6 +3,6 @@ class Challenge
 
   belongs_to :group
 
-  key :title, String
+  key :title, String, required: true
   key :description, String
 end

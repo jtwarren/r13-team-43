@@ -11,6 +11,8 @@ groups#show
 %h1
   Challenges
 
+= render 'create_challenge', group: @group
+
 %ul
   - @group.challenges.each do |challenge|
     %li
