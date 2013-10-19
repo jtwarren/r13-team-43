@@ -1,3 +1,16 @@
 %h1
   Welcome
+
   = current_user.title
+
+.row
+  .col-md-3
+    %h2
+      Most recent groups
+
+    = link_to groups_path do
+      See all groups!
+
+  .col-md-9
+    %ul.list-inline
+      = render partial: 'groups/group', collection: Group.recent.all

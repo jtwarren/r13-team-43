@@ -1,0 +1,32 @@
+%li.media{data: { group_id: group.id }}
+  = link_to group_path(group), class: 'pull-left' do
+    %span.badge.count
+      = group.users.count
+
+  .media-body
+    %h4
+      = group.name
+
+    %p
+      = group.description
+
+    %p
+      Created by
+
+      = gravatar_image_tag(group.creator.email, gravatar: { size: 40 })
+
+    %p
+      Created at
+
+      = l(group.created_at, format: '%d %B')
+
+    - if current_user.groups.include?(group)
+      = link_to leave_group_path(group), remote: true, method: :put, class: 'btn btn-danger leave' do
+        %span.glyphicon.glyphicon-minus-sign
+
+        &nbsp;LeaveMe
+    - else
+      = link_to join_group_path(group), remote: true, method: :put, class: 'btn btn-success join' do
+        %span.glyphicon.glyphicon-plus-sign
+
+        &nbsp;JoinMe

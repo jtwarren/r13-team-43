@@ -9,6 +9,8 @@ class Group
   userstamps!
   timestamps!
 
+  scope :recent, where().sort(:created_at).limit(2)
+
   def users
     User.where(group_ids: id).all
   end
