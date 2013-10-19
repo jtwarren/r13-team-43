@@ -25,13 +25,16 @@ end
 
 group :development do
   gem 'thin'
-  gem 'pry'
+  gem 'spring'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
 end
 
 group :development, :test do
+  gem 'pry'
   gem 'rspec-rails', '~> 2.0'
   gem 'database_cleaner'
 end

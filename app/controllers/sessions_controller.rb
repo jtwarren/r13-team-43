@@ -7,7 +7,6 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-
       redirect_to(root_url, notice: 'Logged in!')
     else
       flash.now.alert = 'Email or password is invalid'
@@ -25,7 +24,15 @@ class SessionsController < ApplicationController
   private
 
   def find_or_create_user
-    User.where(email: params[:email]).first || User.create!(user_params)
+    user = User.where(email: params[:email]).first
+
+    unless user.present?
+      user = User.create(user_params)
+
+      user = nil unless user.persisted?
+    end
+
+    user
   end
 
   def user_params
