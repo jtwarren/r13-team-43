@@ -1,0 +1,4 @@
+/.bundle
+/.ruby-version
+/log/*.log
+/tmp

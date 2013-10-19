@@ -1,0 +1,23 @@
+defaults: &defaults
+  host: 127.0.0.1
+  port: 27017
+  options:
+    w: 1
+    pool_size: 1
+    slave_ok: false
+    ssl: false
+
+development:
+  <<: *defaults
+  database: challengeme_development
+
+test:
+  <<: *defaults
+  database: challengeme_test
+  w: 0
+
+production:
+  <<: *defaults
+  database: challengeme
+  username: <%= ENV['MONGO_USERNAME'] %>
+  password: <%= ENV['MONGO_PASSWORD'] %>
