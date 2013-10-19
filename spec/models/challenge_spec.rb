@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Challenge do
   let(:user) { User.create!(email: 'test@test.com') }
-  let(:group) { Group.create!(title: 'test group 2') }
+  let(:group) { Group.create!(name: 'test group 2') }
   let(:challenge_params) do
     {
       owner: user,
@@ -20,6 +20,10 @@ describe Challenge do
       end.to change(Challenge, :count).by(1)
 
       expect(challenge.log_entries).to be_present
+    end
+
+    it 'should be inactive' do
+      expect(Challenge.create!(challenge_params)).to be_inactive
     end
   end
 
