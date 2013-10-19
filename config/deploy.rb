@@ -18,14 +18,14 @@ set :linked_dirs, %w{log tmp/pids tmp/sockets vendor/bundle}
 
 SSHKit.config.command_map[:rake]  = "bundle exec rake"
 SSHKit.config.command_map[:rails] = "bundle exec rails"
+SSHKit.config.command_map[:unicorn] = "#{shared_path}/unicorn/unicorn"
 
 namespace :deploy do
 
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :unicorn, 'restart'
     end
   end
 
