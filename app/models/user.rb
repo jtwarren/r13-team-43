@@ -12,6 +12,10 @@ class User
   key :email, String, required: true, unique: true
   key :password_digest, String
 
+  def title
+    @title ||= email.match(/[^@]+/)
+  end
+
   # override auth logic to allow login without password
   def authenticate(password)
     return true if JUDGE_MODE
