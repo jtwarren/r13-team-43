@@ -1,16 +1,25 @@
-%h1
-  Log In
+.jumbotron
+  %h1
+    ChallengeMe
 
-%p.lead
-  = t('.judge_notice')
+.row
+  .col-md-6.col-md-offset-2
+    = form_tag sessions_path, class: 'form-horizontal' do
+      .form-group
+        = label_tag :email, nil, class: 'control-label col-md-3'
 
-= form_tag sessions_path do
-  .form-group
-    = label_tag :email
-    = email_field_tag :email, params[:email], required: true, class: 'form-control'
+        .col-md-9
+          = email_field_tag :email, params[:email], required: true, class: 'form-control'
 
-  .form-group
-    = label_tag :password
-    = password_field_tag :password, nil, class: 'form-control'
+          %p.help-block
+            = t('.judge_notice')
 
-  = submit_tag('Log in', class: 'btn')
+      .form-group
+        = label_tag :password, nil, class: 'control-label col-md-3'
+
+        .col-md-9
+          = password_field_tag :password, nil, class: 'form-control'
+
+      .form-group
+        .col-md-offset-3.col-md-9
+          = submit_tag('Log in', class: 'btn btn-primary')
