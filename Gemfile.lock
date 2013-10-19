@@ -49,6 +49,7 @@ GEM
     coffee-script-source (1.6.3)
     commonjs (0.2.7)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -190,6 +191,7 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   coffee-rails (~> 4.0.0)
+  database_cleaner
   haml-rails
   honeybadger
   jbuilder (~> 1.2)
