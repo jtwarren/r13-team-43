@@ -9,6 +9,18 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
+  def new
+    @group = Group.new(params[:group])
+  end
+
+  def create
+    attributes = params[:group]
+    attributes[:creator] = current_user
+    @group = Group.create(attributes)
+
+    redirect_to groups_path, notice: 'Group successfully created.'
+  end
+
   def join
     @group = Group.find(params[:id])
     current_user.groups << @group

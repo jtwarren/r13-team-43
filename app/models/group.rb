@@ -6,6 +6,9 @@ class Group
   key :name, String, required: true
   key :description, String
 
+  userstamps!
+  timestamps!
+
   def users
     User.where(group_ids: id).all
   end

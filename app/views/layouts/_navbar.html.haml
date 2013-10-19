@@ -3,18 +3,19 @@
     = link_to('ChallengeMe', root_url, class: 'navbar-brand')
 
   .navbar-collapse
-    %ul.nav.navbar-nav
-      %li.dropdown
-        = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
-          Groups
+    - if current_user.groups.present?
+      %ul.nav.navbar-nav
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+            Groups
 
-          %b.caret
+            %b.caret
 
-        %ul.dropdown-menu
-          - current_user.groups.each do |group|
-            %li
-              = link_to group_path(group.id) do
-                = group.title
+          %ul.dropdown-menu
+            - current_user.groups.each do |group|
+              %li
+                = link_to group_path(group.id) do
+                  = group.name
 
     %ul.nav.navbar-nav.navbar-right
       %li

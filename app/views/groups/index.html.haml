@@ -1,5 +1,13 @@
 %h1
-  Group Overview
+  %span.glyphicon.glyphicon-th-large
+
+  Groups
+
+= form_for(Group.new, url: new_group_path, method: :get, html: { class: 'form-inline' }) do |form|
+  .form-group
+    = form.text_field(:name, required: true, placeholder: 'Group name...', class: 'form-control')
+
+  = form.submit('Create new group', class: 'btn btn-primary btn-sm')
 
 %ul.media-list
   - @groups.each do |group|
@@ -14,6 +22,16 @@
 
         %p
           = group.description
+
+        %p
+          Created by
+
+          = gravatar_image_tag(group.creator.email, gravatar: { size: 40 })
+
+        %p
+          Created at
+
+          = l(group.created_at, format: '%d %B')
 
         - if current_user.groups.include?(group)
           = link_to leave_group_path(group), remote: true, method: :put, class: 'btn btn-danger leave' do
