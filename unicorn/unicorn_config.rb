@@ -4,11 +4,11 @@ user "deploy"
 
 working_directory "/var/www/apps/challenge_me/current"
 
-listen "/var/www/apps/challenge_me/shared/sockets/unicorn.sock", :backlog => 1024, :tcp_nodelay => true, :tcp_nopush => false, :tries => 5, :delay => 0.5, :accept_filter => "httpready"
+listen "/var/www/apps/challenge_me/shared/tmp/sockets/unicorn.sock", :backlog => 1024, :tcp_nodelay => true, :tcp_nopush => false, :tries => 5, :delay => 0.5, :accept_filter => "httpready"
 
 timeout 60
 
-pid "/var/www/apps/challenge_me/shared/pids/unicorn.pid"
+pid "/var/www/apps/challenge_me/shared/tmp/pids/unicorn.pid"
 
 stderr_path "/var/www/apps/challenge_me/shared/log/unicorn.stderr.log"
 stdout_path "/var/www/apps/challenge_me/shared/log/unicorn.stdout.log"

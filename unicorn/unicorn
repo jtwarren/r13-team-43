@@ -4,7 +4,7 @@ require 'digest/md5'
 
 ROOT_PATH="/var/www/apps/challenge_me"
 APP_NAME="challenge_me"
-PID_PATH="/var/www/apps/challenge_me/shared/pids/unicorn.pid"
+PID_PATH="/var/www/apps/challenge_me/shared/tmp/pids/unicorn.pid"
 
 ENV["PATH"] = "/usr/local/bin:#{ENV['PATH']}"
 
@@ -40,10 +40,10 @@ end
 def start_unicorn
   if File.exists?("#{ROOT_PATH}/current/Gemfile")
     puts "OpsWorks: Gemfile detected - running Unicorn with bundle exec"
-    run_and_ignore_exitcode_and_print_command "cd #{ROOT_PATH}/current && bundle exec unicorn_rails --env production --daemonize -c #{ROOT_PATH}/shared/shared/unicorn.conf"
+    run_and_ignore_exitcode_and_print_command "cd #{ROOT_PATH}/current && bundle exec unicorn_rails --env production --daemonize -c #{ROOT_PATH}/shared/unicorn/unicorn_config.rb"
   else
     puts "OpsWorks: no Gemfile detected - running plain Unicorn"
-    run_and_ignore_exitcode_and_print_command "cd #{ROOT_PATH}/current && bundle exec unicorn_rails --env production --daemonize -c #{ROOT_PATH}/shared/shared/unicorn.conf"
+    run_and_ignore_exitcode_and_print_command "cd #{ROOT_PATH}/current && bundle exec unicorn_rails --env production --daemonize -c #{ROOT_PATH}/shared/unicorn/unicorn_config.rb"
   end
 end
 
