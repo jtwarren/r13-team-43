@@ -17,3 +17,7 @@ First install mongodb via brew package managment
 Start your local mongodb
 
     mongod
+
+## Run tests
+
+    rake spec
