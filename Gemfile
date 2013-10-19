@@ -12,6 +12,7 @@ gem 'haml-rails'
 gem 'mongo_mapper', '>= 0.13.0.beta2'
 gem 'bson_ext'
 gem 'less-rails-bootstrap'
+gem 'honeybadger'
 
 group :doc do
   gem 'sdoc', require: false
