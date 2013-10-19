@@ -3,7 +3,8 @@ class Group
 
   many :challenges
 
-  key :name, String
+  key :name, String, required: true
+  key :description, String
 
   def users
     User.where(group_ids: id).all
