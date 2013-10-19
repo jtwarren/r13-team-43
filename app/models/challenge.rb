@@ -15,9 +15,31 @@ class Challenge
   key :title, String, required: true
   key :description, String
   key :status, String, default: 'inactive'
+  key :difficulty, Integer, default: 2
+  key :due_date, Time, default: -> { 10.days.from_now }
 
   validates_presence_of :owner
   validates_presence_of :group
+
+  def type_options
+    {
+      'Top X' => 'TopChallenge',
+      'Single' => 'SingleChallenge',
+      'Personal' => 'PersonalChallenge',
+    }
+  end
+
+  def difficulty_options
+    {
+      'easy' => 1,
+      'medium' => 2,
+      'hard' => 3,
+    }
+  end
+
+  def points
+    raise NotImplementedError
+  end
 
   def inactive?
     status == 'inactive'

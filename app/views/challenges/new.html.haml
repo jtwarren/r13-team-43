@@ -1,0 +1,29 @@
+%h1
+  New Challenge
+
+.row
+  .col-md-12
+    %h3
+      = t('.title')
+
+    = form_for @challenge, html: { class: 'form-inline new-challenge' } do |form|
+      = form.hidden_field :group_id
+
+      .row
+        .form-group.col-md-7
+          = form.label :title, class: 'sr-only'
+          = form.text_field :title, class: 'form-control'
+
+        .form-group.col-md-7
+          = form.label :_type#, class: 'sr-only'
+          = form.select :_type, @challenge.type_options, {}, class: 'form-control'
+
+        .form-group.col-md-7
+          = form.label :difficulty#, class: 'sr-only'
+          = form.select :difficulty, @challenge.difficulty_options, {}, class: 'form-control'
+
+        .form-group.col-md-7
+          = form.label :due_date#, class: 'sr-only'
+          = form.text_field :due_date, class: 'form-control'
+
+        = form.submit :submit, class: 'btn btn-default col-md-1'

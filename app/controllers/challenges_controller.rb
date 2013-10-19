@@ -1,8 +1,19 @@
 class ChallengesController < ApplicationController
   before_action :authorize
 
+  def new
+    @challenge = Challenge.new(challenge_params)
+  end
+
   def create
-    challenge = Challenge.new(challenge_params)
+    challenge_type = challenge_params[:_type]
+    challenge_type = challenge_type.safe_constantize
+
+    unless challenge_type.ancestors.include?(Challenge)
+      raise 'Invalid challenge type selected.'
+    end
+
+    challenge = challenge_type.new(challenge_params)
 
     if challenge.valid?
       challenge.save!
@@ -23,7 +34,7 @@ class ChallengesController < ApplicationController
   private
 
   def challenge_params
-    params.require(:challenge).permit(:title, :group_id).merge({
+    params.require(:challenge).permit(:title, :group_id, :_type, :due_date, :difficulty).merge({
       owner: current_user,
     })
   end

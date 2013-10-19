@@ -3,7 +3,7 @@
     %h3
       = t('.title')
 
-    = form_for group.challenges.new, html: { class: 'form-inline new-challenge' } do |form|
+    = form_for group.challenges.new, url: new_challenge_url, method: :get, html: { class: 'form-inline new-challenge' } do |form|
       = form.hidden_field :group_id, value: group.id
 
       .row
