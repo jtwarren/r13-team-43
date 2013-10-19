@@ -1,0 +1,17 @@
+groups#show
+
+%h1
+  Users
+
+%ul
+  - @group.users.each do |user|
+    %li
+      = user.email
+
+%h1
+  Challenges
+
+%ul
+  - @group.challenges.each do |challenge|
+    %li
+      = challenge.title

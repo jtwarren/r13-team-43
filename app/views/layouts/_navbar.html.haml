@@ -1,0 +1,34 @@
+%nav.navbar.navbar-default
+  .navbar-header
+    = link_to('ChallengeMe', root_url, class: 'navbar-brand')
+
+  .navbar-collapse
+    %ul.nav.navbar-nav
+      %li.dropdown
+        = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+          Groups
+
+          %b.caret
+
+        %ul.dropdown-menu
+          - current_user.groups.each do |group|
+            %li
+              = link_to group_path(group.id) do
+                = group.title
+
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        - if current_user
+          %p.navbar-text
+            %i.glyphicon.glyphicon-user
+
+            = current_user.email
+
+            = link_to 'Log Out', logout_path
+        - else
+          %p.navbar-text
+            = link_to 'Sign Up', signup_path
+
+            or
+
+            = link_to 'Log In', login_path
