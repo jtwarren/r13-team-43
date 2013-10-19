@@ -29,3 +29,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
 end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+end
