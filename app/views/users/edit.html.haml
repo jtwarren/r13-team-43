@@ -12,6 +12,11 @@
                 = message
 
       .form-group
+        = form.label :gravatar
+        .controls
+          = gravatar_image_tag(form.object.email)
+
+      .form-group
         = form.label :email
         .controls
           %code
