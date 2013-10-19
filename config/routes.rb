@@ -12,7 +12,9 @@ Challengeme::Application.routes.draw do
 
   resources :users
   resources :sessions
-  resources :challenges
+  resources :challenges do
+    put 'complete'
+  end
 
   resources :groups do
     member do
