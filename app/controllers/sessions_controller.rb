@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.where(email: params[:email]).first
+    user = find_or_create_user
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
@@ -20,5 +20,15 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
 
     redirect_to(root_url, notice: 'Logged out!')
+  end
+
+  private
+
+  def find_or_create_user
+    User.where(email: params[:email]).first || User.create!(user_params)
+  end
+
+  def user_params
+    params.permit(:email, :password)
   end
 end
