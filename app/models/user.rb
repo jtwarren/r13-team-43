@@ -12,6 +12,10 @@ class User
   key :email, String, required: true, unique: true
   key :password_digest, String
 
+  key :points, Integer, default: 0
+
+  many :transactions
+
   def title
     @title ||= email.match(/[^@]+/)
   end
