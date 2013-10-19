@@ -21,12 +21,12 @@
       = l(group.created_at, format: '%d %B')
 
     - if current_user.groups.include?(group)
-      = link_to leave_group_path(group), remote: true, method: :put, class: 'btn btn-danger leave' do
+      = link_to leave_group_path(group), remote: true, method: :put, class: 'btn btn-danger btn-xs leave' do
         %span.glyphicon.glyphicon-minus-sign
 
         &nbsp;LeaveMe
     - else
-      = link_to join_group_path(group), remote: true, method: :put, class: 'btn btn-success join' do
+      = link_to join_group_path(group), remote: true, method: :put, class: 'btn btn-success btn-xs join' do
         %span.glyphicon.glyphicon-plus-sign
 
         &nbsp;JoinMe
