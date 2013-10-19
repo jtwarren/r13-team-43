@@ -33,7 +33,7 @@ before_fork do |server, worker|
 
   # Before forking, kill the master process that belongs to the .oldbin PID.
   # This enables 0 downtime deploys.
-  old_pid = "/var/www/apps/challenge_me/shared/pids/unicorn.pid.oldbin"
+  old_pid = "/var/www/apps/challenge_me/shared/tmp/pids/unicorn.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
