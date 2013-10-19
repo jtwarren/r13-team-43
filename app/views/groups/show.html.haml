@@ -3,10 +3,14 @@ groups#show
 %h1
   Users
 
-%ul
-  - @group.users.each do |user|
-    %li
-      = user.email
+.row
+  .col-md-12
+    %ul.list-unstyled
+      - @group.users.each do |user|
+        %li.pull-left
+          = gravatar_image_tag(user.email, class: 'img-rounded', gravatar: { size: 48})
+          %br
+          = user.title
 
 %h1
   Challenges
