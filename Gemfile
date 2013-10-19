@@ -13,6 +13,7 @@ gem 'mongo_mapper', '>= 0.13.0.beta2'
 gem 'bson_ext'
 gem 'less-rails-bootstrap'
 gem 'honeybadger'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 group :doc do
   gem 'sdoc', require: false

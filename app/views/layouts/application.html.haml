@@ -14,6 +14,31 @@
     = csrf_meta_tags
 
   %body
-    = yield
+    .container
+      %nav.navbar.navbar-default
+        .navbar-header
+          = link_to('ChallengeMe', root_url, class: 'navbar-brand')
+
+        .navbar-collapse
+          %ul.nav.navbar-nav.navbar-right
+            %li
+              - if current_user
+                %p.navbar-text
+                  %i.glyphicon.glyphicon-user
+
+                  = current_user.email
+
+                  = link_to 'Log Out', logout_path
+              - else
+                %p.navbar-text
+                  = link_to 'Sign Up', signup_path
+
+                  or
+
+                  = link_to 'Log In', login_path
+
+      = render 'layouts/flash'
+
+      = yield
 
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
