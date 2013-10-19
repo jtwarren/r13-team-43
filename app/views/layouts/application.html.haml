@@ -15,7 +15,7 @@
 
     = csrf_meta_tags
 
-  %body
+  %body{class: "#{params[:controller]}-#{params[:action]}"}
     .container
       = render 'layouts/navbar' if current_user
 
