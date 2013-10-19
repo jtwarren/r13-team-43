@@ -6,6 +6,9 @@ class User
 
   has_secure_password unless JUDGE_MODE
 
+  many :groups, in: :group_ids
+  key :group_ids, Set
+
   key :email, String, required: true, unique: true
   key :password_digest, String
 
