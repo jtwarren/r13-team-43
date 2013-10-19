@@ -53,5 +53,34 @@ describe UsersController do
     end
   end
 
+  describe '#destroy' do
+    let(:user_params) do
+      {
+        email: 'test@test.de',
+      }
+    end
+
+    before do
+      @current_user = User.create!(user_params)
+
+      controller.stub(:authorize)
+      controller.stub(:current_user) { @current_user }
+    end
+
+    it 'should delete current user' do
+      post :destroy, id: @current_user.id
+
+      response.should redirect_to(root_url)
+      expect{ @current_user.reload }.to raise_error(MongoMapper::DocumentNotFound)
+    end
+
+    it 'should not delete other users' do
+      other_user = User.create!({ email: 'user2@internet.net' })
+
+      post :destroy, id: other_user.id
+      response.should redirect_to(root_url)
+      expect{ other_user.reload }.not_to raise_error
+    end
+  end
 end
 

@@ -22,9 +22,10 @@
           %p.navbar-text
             %i.glyphicon.glyphicon-user
 
-            = current_user.email
+            = link_to current_user.email, edit_user_path(current_user)
 
             = link_to 'Log Out', logout_path
+
         - else
           %p.navbar-text
             = link_to 'Sign Up', signup_path

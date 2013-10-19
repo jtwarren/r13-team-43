@@ -1,0 +1,23 @@
+%h1
+  = t('.title')
+
+.row
+  .col-md-6
+    = form_for @user do |form|
+      - if @user.errors.any?
+        .alert.alert-danger
+          %ul
+            - @user.errors.full_messages.each do |message|
+              %li
+                = message
+
+      .form-group
+        = form.label :email
+        .controls
+          %code
+            = @user.email
+
+  .col-md-6
+    = link_to @user, method: :delete, class: 'btn btn-danger', confirm: t('.delete_confirmation') do
+      %i.glyphicon.glyphicon-trash
+      = t('.delete_account')
