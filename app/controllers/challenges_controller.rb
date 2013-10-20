@@ -2,7 +2,13 @@ class ChallengesController < ApplicationController
   before_action :authorize
 
   def new
-    @challenge = Challenge.new(challenge_params)
+    if challenge_params[:_type].blank?
+      @challenge = ChallengeDecorator.decorate(Challenge.new(challenge_params))
+      render 'type_selection'
+      return
+    else
+      @challenge = get_challenge_class.new(challenge_params)
+    end
   end
 
   def copy
@@ -12,14 +18,7 @@ class ChallengesController < ApplicationController
   end
 
   def create
-    challenge_type = challenge_params[:_type]
-    challenge_type = challenge_type.safe_constantize
-
-    unless challenge_type.ancestors.include?(Challenge)
-      raise 'Invalid challenge type selected.'
-    end
-
-    challenge = challenge_type.new(challenge_params)
+    challenge = get_challenge_class.new(challenge_params)
 
     if challenge.valid?
       challenge.save!
@@ -78,5 +77,16 @@ class ChallengesController < ApplicationController
     ).merge({
       creator: current_user,
     })
+  end
+
+  def get_challenge_class
+    challenge_type = challenge_params[:_type]
+    challenge_type = challenge_type.safe_constantize
+
+    unless challenge_type.ancestors.include?(Challenge)
+      raise 'Invalid challenge type selected.'
+    end
+
+    challenge_type
   end
 end

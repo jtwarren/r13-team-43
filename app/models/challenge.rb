@@ -42,9 +42,9 @@ class Challenge
   # mapping between internal type and human readable presentation
   def type_options
     {
-      'Top X' => 'TopChallenge',
-      'Single' => 'SingleChallenge',
-      'Personal' => 'PersonalChallenge',
+      I18n.t('mongo_mapper.models.single_challenge') => 'SingleChallenge',
+      I18n.t('mongo_mapper.models.top_challenge') => 'TopChallenge',
+      I18n.t('mongo_mapper.models.personal_challenge') => 'PersonalChallenge',
     }
   end
 

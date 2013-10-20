@@ -1,0 +1,44 @@
+%h1
+  Choose a challenge type
+
+.row
+  .col-md-12
+    = form_for @challenge, url: new_challenge_path, method: :get, html: { class: 'form-horizontal challenge-type-selection' } do |form|
+      = form.hidden_field :group_id
+      = form.hidden_field :title
+
+      .row
+        .col-md-4.challenge-type
+          = form.radio_button :_type, 'TopChallenge', id: 'challenge_type_topchallenge', class: 'sr-only'
+          = form.label('type_topchallenge', class: 'well') do
+            %span.glyphicon{class: @challenge.type_icon_for_class(TopChallenge)}
+
+            %p.title
+              = TopChallenge.model_name.human
+
+          .lead
+            A challenge that is open to all members of the group and can be completed multiple times. The size of your group determines how many persons can win points.
+
+        .col-md-4.challenge-type
+          = form.radio_button :_type, 'PersonalChallenge', id: 'challenge_type_personalchallenge', class: 'sr-only'
+
+          = form.label('type_personalchallenge', class: 'well') do
+            %span.glyphicon{class: @challenge.type_icon_for_class(PersonalChallenge)}
+
+            %p.title
+              = PersonalChallenge.model_name.human
+
+          .lead
+            A challenge that is designed with a special person in mind. Only this person can complete it.
+
+        .col-md-4.challenge-type
+          = form.radio_button :_type, 'SingleChallenge', id: 'challenge_type_singlechallenge', class: 'sr-only'
+
+          = form.label('type_singlechallenge', class: 'well') do
+            %span.glyphicon{class: @challenge.type_icon_for_class(SingleChallenge)}
+
+            %p.title
+              = SingleChallenge.model_name.human
+
+          .lead
+            A challenge that is open to everyone in the group. But only the first to complete it gets credit.

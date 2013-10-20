@@ -12,3 +12,9 @@ en:
       title: 'Your profile'
       delete_account: 'Delete account'
       delete_confirmation: 'Really delete this account?'
+
+  mongo_mapper:
+    models:
+      single_challenge: 'Single Winner'
+      top_challenge: 'Top X Winner'
+      personal_challenge: 'Personal challenge'

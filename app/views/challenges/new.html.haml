@@ -5,7 +5,7 @@
 
     %hr
 
-    = form_for :challenge, url: challenges_path, method: :post, html: { class: 'form-horizontal new-challenge' } do |form|
+    = form_for @challenge, as: :challenge, url: challenges_path, method: :post, html: { class: 'form-horizontal new-challenge' } do |form|
       = form.hidden_field :group_id
 
       .form-group
@@ -21,16 +21,18 @@
           = form.text_area :description, class: 'form-control'
 
       .form-group
-        = form.label :_type, class: 'control-label col-md-3'
-
-        .col-md-9
-          = form.select :_type, @challenge.type_options, {}, class: 'form-control'
-
-      .form-group
         = form.label :difficulty, class: 'control-label col-md-3'
 
         .col-md-9
           = form.select :difficulty, @challenge.difficulty_options, {}, class: 'form-control'
+
+      .form-group
+        = form.label :_type, class: 'control-label col-md-3'
+        = form.hidden_field :_type
+
+        .col-md-9
+          %span.form-control
+            = form.object.class.model_name.human
 
       .form-group
         .col-md-offset-3.col-md-9

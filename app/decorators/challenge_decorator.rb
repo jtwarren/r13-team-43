@@ -2,12 +2,15 @@ class ChallengeDecorator < Draper::Decorator
   delegate_all
 
   def type_icon
-    case model
-    when TopChallenge
+    type_icon_for_class(model.class)
+  end
+
+  def type_icon_for_class(klass)
+    if klass == TopChallenge
       'glyphicon-bookmark'
-    when SingleChallenge
+    elsif klass == SingleChallenge
       'glyphicon-flag'
-    when PersonalChallenge
+    else # PersonalChallenge
       'glyphicon-star'
     end
   end
