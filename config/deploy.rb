@@ -26,6 +26,9 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :unicorn, 'restart'
+
+      # Copy freaking glyphicons unhashed into the public assets path.
+      execute "cp #{current_path}/app/assets/fonts/twitter/bootstrap/* #{current_path}/public/assets/twitter/bootstrap/"
     end
   end
 
