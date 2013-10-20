@@ -56,6 +56,22 @@ describe Challenge do
 
       expect(subject.vote(user)).to eq(false)
     end
+
+    it 'should add log entry' do
+      expect do
+        subject.vote(user)
+      end.to change(subject.log_entries, :count).by(1)
+    end
+
+    it 'should activate challenge if threshold is reached' do
+      subject.stub(:activation_threshold) { 1 }
+
+      expect do
+        subject.vote(user)
+      end.to change(subject, :status).to('active')
+
+      expect(subject).to be_active
+    end
   end
 
   describe '#allow_vote?' do
@@ -65,6 +81,23 @@ describe Challenge do
       expect(subject.vote(user)).to be_true
 
       expect(subject.allow_vote?(user)).to be_false
+    end
+  end
+
+  describe '#activation_threshold' do
+    before do
+      group.stub_chain(:users, :count) { 90 }
+    end
+
+    it 'should set threshold based on user count' do
+      # 20% of 90 = 18
+      expect(subject.activation_threshold).to eq(18)
+    end
+
+    it 'should set threshold to at least 1' do
+      group.stub_chain(:users, :count) { 0 }
+
+      expect(subject.activation_threshold).to eq(1)
     end
   end
 end

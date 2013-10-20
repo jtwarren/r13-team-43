@@ -2,6 +2,7 @@ class Challenge
   include MongoMapper::Document
 
   before_create :add_creation_log_entry
+  before_create :set_activation_threshold
 
   belongs_to :group
   belongs_to :owner, foreign_key: :owner_id, class_name: 'User'
@@ -16,10 +17,13 @@ class Challenge
   key :description, String
   key :_type, String
   key :status, String, default: 'inactive'
+  key :activation_threshold, Integer, default: 1
+
   key :difficulty, Integer, default: 2
   key :due_date, Time, default: -> { 10.days.from_now }
 
-  key :voted_users, Set, default: -> { [] }
+  many :voted_users, in: :voted_users_ids, class_name: 'User'
+  key :voted_users_ids, Set
 
   validates_presence_of :owner
   validates_presence_of :group
@@ -44,6 +48,10 @@ class Challenge
 
   def points
     raise NotImplementedError
+  end
+
+  def votes
+    voted_users.count
   end
 
   def inactive?
@@ -75,6 +83,11 @@ class Challenge
       false
     else
       self.voted_users << voter
+      self.log_entries << ChallengeLogEntry.user_voted_challenge(voter)
+
+      check_activation_threshold
+      save!
+
       true
     end
   end
@@ -89,7 +102,29 @@ class Challenge
 
   private
 
+  def activate
+    self.status = 'active'
+
+    ChallengeLogEntry.challenge_activated()
+  end
+
   def add_creation_log_entry
     self.log_entries << ChallengeLogEntry.challenge_created(owner)
+  end
+
+  def set_activation_threshold
+    threshold = (group.users.count * 0.2).to_i
+
+    if threshold == 0
+      threshold = 1
+    end
+
+    self.activation_threshold = threshold
+  end
+
+  def check_activation_threshold
+    if votes >= activation_threshold
+      activate
+    end
   end
 end
