@@ -19,9 +19,12 @@ class Challenge
   key :difficulty, Integer, default: 2
   key :due_date, Time, default: -> { 10.days.from_now }
 
+  key :voted_users, Set, default: -> { [] }
+
   validates_presence_of :owner
   validates_presence_of :group
 
+  # mapping between internal type and human readable presentation
   def type_options
     {
       'Top X' => 'TopChallenge',
@@ -30,6 +33,7 @@ class Challenge
     }
   end
 
+  # mapping between internal difficulty and human readable presentation
   def difficulty_options
     {
       'easy' => 1,
@@ -59,6 +63,20 @@ class Challenge
   # after another user confirmed the completeness
   def confirmed?
     status == 'confirmed'
+  end
+
+  def allow_vote?(user)
+    !self.voted_users.include?(user)
+  end
+
+  # when a user votes for this challenge
+  def vote(voter)
+    if self.voted_users.include?(voter)
+      false
+    else
+      self.voted_users << voter
+      true
+    end
   end
 
   # a user signals that he completed this challenge
