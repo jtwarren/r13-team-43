@@ -19,6 +19,13 @@
     %dd
       = challenge.points
 
+    - if challenge.is_a?(PersonalChallenge)
+      %dt
+        Target:
+
+      %dd
+        = render 'layouts/gravatar', email: challenge.target_user.email
+
     %dt
       Description:
 
