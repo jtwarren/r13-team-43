@@ -1,13 +1,13 @@
 class GroupsController < ApplicationController
   before_action :authorize
+  before_action :set_group, only: [:show, :edit, :update, :join, :leave]
+  before_action :authenticate, only: [:edit, :update]
 
   def index
     @groups = Group.all
   end
 
   def show
-    @group = Group.find(params[:id])
-
     @active_challenges = ChallengeDecorator.decorate_collection(@group.challenges.active.all)
     @inactive_challenges = ChallengeDecorator.decorate_collection(@group.challenges.inactive.all)
   end
@@ -24,8 +24,18 @@ class GroupsController < ApplicationController
     redirect_to groups_path, notice: 'Group successfully created.'
   end
 
+  def edit
+  end
+
+  def update
+    attributes = params[:group]
+    attributes[:updater] = current_user
+    @group.update_attributes(attributes)
+
+    redirect_to @group, notice: 'Group successfully updated.'
+  end
+
   def join
-    @group = Group.find(params[:id])
     current_user.groups << @group
 
     current_user.save!
@@ -34,11 +44,22 @@ class GroupsController < ApplicationController
   end
 
   def leave
-    @group = Group.find(params[:id])
     current_user.groups = current_user.groups - [@group]
 
     current_user.save!
 
     render layout: false
+  end
+
+  private
+
+  def set_group
+    @group = Group.find(params[:id])
+  end
+
+  def authenticate
+    unless @group.users.include?(current_user)
+      redirect_to groups_path, alert: "You are not a group member."
+    end
   end
 end

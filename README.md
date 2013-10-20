@@ -1,5 +1,7 @@
 # ChallengeMe
 
+http://challengeme.r13.railsrumble.com/
+
 # Development Requirements
 
 ## Setup Ruby
