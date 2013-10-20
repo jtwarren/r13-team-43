@@ -6,7 +6,23 @@
 
     = render 'challenges/status', challenge: challenge
 
-  %p
-    = challenge.description
+  %dl.dl-horizontal
+    %dt
+      Difficulty level:
+
+    %dd
+      = challenge.difficulty
+
+    %dt
+      Points:
+
+    %dd
+      = challenge.points
+
+    %dt
+      Description:
+
+    %dd
+      = challenge.description
 
   = render 'challenges/votes', challenge: challenge

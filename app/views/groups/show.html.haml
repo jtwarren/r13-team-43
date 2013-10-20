@@ -28,20 +28,21 @@
   .col-md-8
     = render 'challenges'
 
-.row
-  .col-md-12
-    %h2
-      Finished Challenges
+- if @finished_challenges_preview.present?
+  .row
+    .col-md-12
+      %h2
+        Finished Challenges
 
-    %hr
+      %hr
 
-    %ul.list-unstyled
-      = render partial: 'challenges/finished_challenge', collection: @finished_challenges_preview
+      %ul.list-unstyled
+        = render partial: 'challenges/finished_challenge', collection: @finished_challenges_preview
 
-    - if @finished_challenges_rest.present?
-      %a.btn.btn-primary.btn-xs{data: { toggle: "collapse", target: "#collapseOne" }}
-        = "and #{@finished_challenges_rest.count} more..."
+      - if @finished_challenges_rest.present?
+        %a.btn.btn-primary.btn-xs{data: { toggle: "collapse", target: "#collapseOne" }}
+          = "and #{@finished_challenges_rest.count} more..."
 
-      #collapseOne.collapse.in
-        %ul.list-unstyled
-          = render partial: 'challenges/finished_challenge', collection: @finished_challenges_rest
+        #collapseOne.collapse.in
+          %ul.list-unstyled
+            = render partial: 'challenges/finished_challenge', collection: @finished_challenges_rest

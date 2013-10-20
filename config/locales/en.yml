@@ -16,6 +16,7 @@ en:
   challenges:
     status:
       left: '%{count} of %{limit} accepted'
+      needed: '%{count} of %{limit} votes'
 
   mongo_mapper:
     models:

@@ -14,4 +14,15 @@ class ChallengeDecorator < Draper::Decorator
       'glyphicon-star'
     end
   end
+
+  def difficulty
+    case model.difficulty
+    when 1
+      'easy'
+    when 2
+      'medium'
+    when 3
+      'hard'
+    end
+  end
 end

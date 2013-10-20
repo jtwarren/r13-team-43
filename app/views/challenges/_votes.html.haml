@@ -1,6 +1,3 @@
-%span.badge
-  = challenge.votes
-
 - if challenge.allow_vote?(current_user)
   = link_to vote_challenge_path(challenge), remote: true, method: :put, class: 'btn btn-primary btn-xs' do
     %span.glyphicon.glyphicon-thumbs-up

@@ -2,12 +2,19 @@
   %span.label.label-warning
     = challenge.status
 
+  &nbsp;
+
+  %span.label.label-warning
+    = t('.needed', count: challenge.votes, limit: challenge.activation_threshold)
+
 - else
   %span.label.label-success
     = challenge.status
 
   - if challenge.is_a?(TopChallenge)
     &nbsp;
+
     %span.label.label-success
       = t('.left', count: challenge.accepted_count, limit: challenge.limit)
+
 
