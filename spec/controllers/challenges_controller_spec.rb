@@ -42,7 +42,7 @@ describe ChallengesController do
 
     it 'should increase votes of challenge' do
       expect do
-        put :vote, challenge_id: @challenge.id, format: :js
+        put :vote, id: @challenge.id, format: :js
         @challenge.reload
 
         expect(response).to be_success
@@ -61,11 +61,32 @@ describe ChallengesController do
 
     it 'should add user to participants' do
       expect do
-        put :complete, challenge_id: @challenge.id, format: :js
-        @challenge.reload
-
+        put :complete, id: @challenge.id, format: :js
         expect(response).to be_success
-      end.to change(@challenge.participants, :count).by(1)
+        @challenge.reload
+      end.to change(@challenge.reload, :participants)
+    end
+  end
+
+  describe '#accept' do
+    before do
+      @current_user = FactoryGirl.create(:user_with_group)
+      @challenge = FactoryGirl.create(:challenge_completed, group: @current_user.groups.first)
+
+      controller.stub(:authorize)
+      controller.stub(:current_user) { @current_user }
+    end
+
+    it 'should accept creators workflow' do
+      workflow = @challenge.participants.first
+
+      put :approve, id: @challenge.id, user_id: workflow.creator, format: :js
+      expect(response).to be_success
+      @challenge.reload
+
+      new_workflow = @challenge.participants.first
+
+      expect(new_workflow.acceptors).not_to eq(workflow.acceptors)
     end
   end
 end

@@ -16,9 +16,14 @@
 
         = render 'groups/actions', group: @group
 
+- if @review_challenges.present?
+  .row
+    .col-md-12
+      = render 'review', challenges: @review_challenges
+
 .row
-  .col-md-6
+  .col-md-4
     = render 'scores'
 
-  .col-md-6
+  .col-md-8
     = render 'challenges'

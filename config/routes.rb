@@ -13,8 +13,11 @@ Challengeme::Application.routes.draw do
   resources :users
   resources :sessions
   resources :challenges do
-    put 'vote'
-    put 'complete'
+    member do
+      put 'vote'
+      put 'complete'
+      put 'approve/:user_id' => 'challenges#approve', as: :approve
+    end
   end
 
   resources :groups do

@@ -26,11 +26,16 @@ class Challenge
   key :voted_users_ids, Set
 
   # users that completed the challenge
-  many :participants, in: :participants_ids, class_name: 'User'
-  key :participants_ids, Set
+  many :participants, in: :participants_ids, class_name: 'CompletionWorkflow'
 
   validates_presence_of :creator
   validates_presence_of :group
+
+  def self.reviews_for(group, user)
+    active.where(group_id: group.id).select do |challenge|
+      challenge.open_completion_workflow_for?(user)
+    end
+  end
 
   # mapping between internal type and human readable presentation
   def type_options
@@ -90,6 +95,18 @@ class Challenge
     user != creator
   end
 
+  # acceptor: user who confirms
+  # user: user who
+  def allow_accept?(acceptor, participant_user)
+    workflow = workflow_for_user(participant_user)
+
+    workflow.present? &&
+    workflow.available_for?(acceptor) &&
+    active? &&
+    acceptor.groups.include?(self.group) &&
+    acceptor != participant_user
+  end
+
   # when a user votes for this challenge
   def vote(voter)
     if allow_vote?(voter)
@@ -108,20 +125,51 @@ class Challenge
   # a user signals that he completed this challenge
   def complete(user)
     if allow_completion?(user)
-      self.participants << user
+      workflow = CompletionWorkflow.new
+      workflow.creator = user
+
+      self.participants << workflow
       self.log_entries << ChallengeLogEntry.user_completed_challenge(user)
 
-      save!
+      self.save!
+    else
+      false
+    end
+  end
+
+  # a user signals that another one completed this challenge
+  def accept(acceptor, participant_user)
+    if allow_accept?(acceptor, participant_user)
+      workflow = workflow_for_user(participant_user)
+
+      workflow.accept(acceptor)
+      self.log_entries << ChallengeLogEntry.user_accepted_workflow(acceptor, participant_user)
+
+      self.save!
     else
       false
     end
   end
 
   def participant?(user)
-    participants.include?(user)
+    participants.detect do |workflow|
+      workflow.creator == user
+    end.present?
+  end
+
+  def open_completion_workflow_for?(user)
+    participants.detect do |workflow|
+      workflow.available_for?(user)
+    end.present?
   end
 
   private
+
+  def workflow_for_user(user)
+    participants.detect do |workflow|
+      workflow.creator == user
+    end
+  end
 
   def activate
     self.status = 'active'

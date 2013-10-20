@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
   def show
     @active_challenges = ChallengeDecorator.decorate_collection(@group.challenges.active.all)
     @inactive_challenges = ChallengeDecorator.decorate_collection(@group.challenges.inactive.all)
+    @review_challenges = ChallengeDecorator.decorate_collection(Challenge.reviews_for(@group, current_user))
   end
 
   def new

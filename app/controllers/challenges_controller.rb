@@ -25,16 +25,28 @@ class ChallengesController < ApplicationController
   end
 
   def vote
-    challenge = Challenge.find(params[:challenge_id])
+    challenge = Challenge.find(params[:id])
 
     challenge.vote(current_user)
   end
 
   # user signals that he completed the challenge
   def complete
-    challenge = Challenge.find(params[:challenge_id])
+    challenge = Challenge.find(params[:id])
 
     challenge.complete(current_user)
+  end
+
+  # user signals that someone completed the challenge
+  def approve
+    @challenge = Challenge.find(params[:id])
+    @creator = User.find(params[:user_id])
+
+    if @challenge.allow_accept?(current_user, @creator)
+      @challenge.accept(current_user, @creator)
+    else
+      render text: 'invalid challenge or user', status: :not_accepted
+    end
   end
 
   private

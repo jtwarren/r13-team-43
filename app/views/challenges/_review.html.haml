@@ -1,0 +1,16 @@
+%li
+  %h3
+    %span.glyphicon{class: challenge.type_icon}
+
+    = challenge.title
+
+  %p
+    = challenge.description
+
+  %p
+    Did those members complete the challenge?
+
+  %table.table
+    - challenge.participants.each do |workflow|
+      - if workflow.available_for?(current_user) &&
+        = render 'challenges/workflow', challenge: challenge, workflow: workflow

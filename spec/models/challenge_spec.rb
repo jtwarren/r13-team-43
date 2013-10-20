@@ -40,7 +40,8 @@ describe Challenge do
     it 'should add user to participants' do
       subject.complete(user)
 
-      expect(subject.participants).to include(user)
+      subject.reload
+      expect(subject).to be_participant(user)
     end
   end
 
@@ -106,6 +107,28 @@ describe Challenge do
       group.stub_chain(:users, :count) { 0 }
 
       expect(subject.activation_threshold).to eq(1)
+    end
+  end
+
+  describe '#accept' do
+    let(:acceptor) { FactoryGirl.create(:user_with_group) }
+    let(:subject) { FactoryGirl.create(:challenge_completed, group: acceptor.groups.first) }
+    let(:creator) { subject.participants.first.creator }
+
+    it 'should add a log entry' do
+      expect(subject).to be_allow_accept(acceptor, creator)
+
+      expect do
+        subject.accept(acceptor, creator)
+      end.to change(subject.log_entries, :count).by(1)
+    end
+
+    it 'should not allow accepting twice' do
+      expect(subject).to be_allow_accept(acceptor, creator)
+
+      subject.accept(acceptor, creator)
+
+      expect(subject).not_to be_allow_accept(acceptor, creator)
     end
   end
 end

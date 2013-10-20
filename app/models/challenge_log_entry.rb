@@ -20,4 +20,9 @@ class ChallengeLogEntry
   def self.user_voted_challenge(user)
     new(message: "#{user.title} voted for this challenge.")
   end
+
+  def self.user_accepted_workflow(acceptor, completer)
+    new(message: "#{acceptor.title} accepted #{completer.title} claim.")
+  end
+
 end
