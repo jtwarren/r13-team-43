@@ -20,18 +20,28 @@ class Transaction
       user: user,
       challenge: challenge,
       points: points,
-      total_points: user.points,
+      total_points: user.points(challenge.group),
     })
 
     transaction.store!
   end
 
+  def group
+    challenge.group
+  end
+
   def store!
     save!
 
-    user.increment(points: points)
-    user.reload
+    user_point = UserPoint.where(group_id: group.id, user_id: user.id)
 
+    if user_point.present?
+      UserPoint.where(group_id: group.id, user_id: user.id).increment(points: points)
+    else
+      UserPoint.create!(group: group, user: user, points: points)
+    end
+
+    user.reload
     self
   end
 end

@@ -129,10 +129,11 @@ describe Challenge do
     it 'should increase users points' do
       expect(subject).to be_allow_accept(acceptor, creator)
 
-      expect do
-        subject.accept(acceptor, creator)
-        creator.reload
-      end.to change(creator, :points).by(subject.points)
+      old_points = creator.points(subject.group)
+      subject.accept(acceptor, creator)
+      creator.reload
+
+      expect(creator.points(subject.group)).to eq(old_points + subject.points)
     end
 
     it 'should put challenge in finished status' do

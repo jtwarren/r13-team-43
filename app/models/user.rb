@@ -11,8 +11,6 @@ class User
   key :email, String, required: true, unique: true
   key :password_digest, String
 
-  key :points, Integer, default: 0
-
   many :transactions
 
   def title
@@ -22,5 +20,15 @@ class User
   # override auth logic to allow login without password
   def authenticate(password)
     true
+  end
+
+  def points(group)
+    user_point = UserPoint.where(group_id: group.id, user_id: id).first
+
+    if user_point
+      user_point.points
+    else
+      0
+    end
   end
 end

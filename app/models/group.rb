@@ -2,6 +2,7 @@ class Group
   include MongoMapper::Document
 
   many :challenges
+  many :user_points
 
   key :name, String, required: true
   key :description, String

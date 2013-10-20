@@ -1,16 +1,18 @@
 require 'spec_helper'
 
 describe Transaction do
-  let(:user) { FactoryGirl.create :user, points: 100 }
+  let(:user) { FactoryGirl.create :user }
   let(:challenge) { FactoryGirl.create :challenge, creator: user }
   let(:points) { 5 }
 
   describe '#update_user_points' do
     it 'should update users total' do
-      expect do
-        Transaction.update_user_points(user, challenge, points)
-        user.reload
-      end.to change(user, :points).by(points)
+      old_points = user.points(challenge.group)
+
+      Transaction.update_user_points(user, challenge, points)
+      user.reload
+
+      expect(user.points(challenge.group)).to be(old_points + points)
     end
 
     it 'should create transaction record' do
@@ -23,7 +25,6 @@ describe Transaction do
       expect(transaction.user).to eq(user)
       expect(transaction.challenge).to eq(challenge)
       expect(transaction.points).to eq(points)
-      expect(transaction.total_points).to eq(user.points)
 
       expect(user.transactions).to be_present
       expect(user.transactions.count).to eq(1)
