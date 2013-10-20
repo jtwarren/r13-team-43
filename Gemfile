@@ -15,6 +15,7 @@ gem 'less-rails-bootstrap'
 gem 'honeybadger'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'gravatar_image_tag'
+gem 'draper'
 
 group :doc do
   gem 'sdoc', require: false

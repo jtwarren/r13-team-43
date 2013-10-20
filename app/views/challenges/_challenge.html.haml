@@ -1,0 +1,19 @@
+%li
+  %h3
+    %span.glyphicon{class: challenge.type_icon}
+
+    = challenge.title
+
+    = render 'challenges/status', challenge: challenge
+
+  %p
+    = challenge.description
+
+  %span.badge
+    0
+
+  - if challenge.inactive?
+    = link_to '#', class: 'btn btn-primary btn-xs' do
+      %span.glyphicon.glyphicon-thumbs-up
+
+      Vote

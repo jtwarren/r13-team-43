@@ -14,6 +14,7 @@ class Challenge
 
   key :title, String, required: true
   key :description, String
+  key :_type, String
   key :status, String, default: 'inactive'
   key :difficulty, Integer, default: 2
   key :due_date, Time, default: -> { 10.days.from_now }

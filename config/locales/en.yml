@@ -1,8 +1,8 @@
 en:
   groups:
     create_challenge:
-      title: 'i challenge you to ...'
-      title_placeholder: 'Enter your challenge'
+      title: 'I challenge you to ...'
+      title_placeholder: 'Enter your challenge title...'
 
   users:
     create:

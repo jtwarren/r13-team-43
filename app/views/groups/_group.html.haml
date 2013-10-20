@@ -13,7 +13,7 @@
     %p
       Created by
 
-      = gravatar_image_tag(group.creator.email, gravatar: { size: 40 })
+      = render 'layouts/gravatar', email: group.creator.email
 
     %p
       Created at
@@ -21,7 +21,7 @@
       = l(group.created_at, format: '%d %B')
 
     - if current_user.groups.include?(group)
-      = link_to leave_group_path(group), remote: true, method: :put, class: 'btn btn-danger btn-xs leave' do
+      = link_to leave_group_path(group), remote: true, method: :put, class: 'btn btn-primary btn-xs leave' do
         %span.glyphicon.glyphicon-minus-sign
 
         &nbsp;LeaveMe

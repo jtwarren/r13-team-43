@@ -13,11 +13,13 @@
 
       .form-group
         = form.label :gravatar
+
         .controls
-          = gravatar_image_tag(form.object.email)
+          = render 'layouts/gravatar', email: form.object.email
 
       .form-group
         = form.label :email
+
         .controls
           %code
             = @user.email
@@ -25,4 +27,5 @@
   .col-md-6
     = link_to @user, method: :delete, class: 'btn btn-danger', confirm: t('.delete_confirmation') do
       %i.glyphicon.glyphicon-trash
+
       = t('.delete_account')

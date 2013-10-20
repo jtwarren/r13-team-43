@@ -7,6 +7,9 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+
+    @active_challenges = ChallengeDecorator.decorate_collection(@group.challenges.active.all)
+    @inactive_challenges = ChallengeDecorator.decorate_collection(@group.challenges.inactive.all)
   end
 
   def new

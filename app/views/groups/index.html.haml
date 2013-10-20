@@ -5,6 +5,7 @@
 
 = form_for(Group.new, url: new_group_path, method: :get, html: { class: 'form-inline' }) do |form|
   .form-group
+    = form.label :name, class: 'sr-only'
     = form.text_field(:name, required: true, placeholder: 'Group name...', class: 'form-control')
 
   = form.submit('Create new group', class: 'btn btn-primary btn-sm')

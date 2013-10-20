@@ -34,7 +34,14 @@ class ChallengesController < ApplicationController
   private
 
   def challenge_params
-    params.require(:challenge).permit(:title, :group_id, :_type, :due_date, :difficulty).merge({
+    params.require(:challenge).permit(
+      :title,
+      :description,
+      :group_id,
+      :_type,
+      :due_date,
+      :difficulty
+    ).merge({
       owner: current_user,
     })
   end

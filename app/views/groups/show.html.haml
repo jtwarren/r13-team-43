@@ -1,23 +1,28 @@
-groups#show
-
 %h1
-  Users
+  = @group.name
+
+%h2
+  Members
 
 .row
   .col-md-12
     %ul.list-unstyled
       - @group.users.each do |user|
         %li.pull-left
-          = gravatar_image_tag(user.email, class: 'img-rounded', gravatar: { size: 48})
+          = render 'layouts/gravatar', email: user.email
+
           %br
+
           = user.title
 
-%h1
+%h2
   Challenges
 
 = render 'create_challenge', group: @group
 
-%ul
-  - @group.challenges.each do |challenge|
-    %li
-      = challenge.title
+%ul.list-unstyled
+  = render partial: 'challenges/challenge', collection: @active_challenges
+
+  %hr
+
+  = render partial: 'challenges/challenge', collection: @inactive_challenges
