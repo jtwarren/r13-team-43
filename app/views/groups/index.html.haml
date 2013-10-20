@@ -1,14 +1,16 @@
-%h1
-  %span.glyphicon.glyphicon-th-large
+.row
+  .col-md-12
+    .jumbotron
+      %h1
+        %span.glyphicon.glyphicon-th-large
 
-  Groups
+        All groups
 
-= form_for(Group.new, url: new_group_path, method: :get, html: { class: 'form-inline' }) do |form|
-  .form-group
-    = form.label :name, class: 'sr-only'
-    = form.text_field(:name, required: true, placeholder: 'Group name...', class: 'form-control')
+      = form_for(Group.new, url: new_group_path, method: :get, html: { class: 'form-inline' }) do |form|
+        = form.text_field(:name, required: true, placeholder: 'Group name...', class: 'form-control')
+        = form.submit('Create new group', class: 'btn btn-primary btn-sm')
 
-  = form.submit('Create new group', class: 'btn btn-primary btn-sm')
-
-%ul.list-unstyled
-  = render partial: 'group', collection: @groups
+.row
+  .col-md-12
+    %ul.list-unstyled
+      = render partial: 'group', collection: @groups

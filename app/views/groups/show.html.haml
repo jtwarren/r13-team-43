@@ -1,16 +1,20 @@
-%h1
-  %span.glyphicon.glyphicon-th-large
+.jumbotron
+  .container
+    .media
+      = image_tag('http://lorempixel.com/200/200/abstract/', class: 'thumbnail pull-left')
 
-  = @group.name
+      .media-body
+        %h1.media-heading
+          = @group.name
 
-  %small
-    = link_to edit_group_path(@group) do
-      Edit
+          %small
+            = link_to edit_group_path(@group) do
+              Edit
 
-%p
-  = @group.description
+        %p
+          = @group.description
 
-= render 'groups/actions', group: @group
+        = render 'groups/actions', group: @group
 
 .row
   .col-md-6
