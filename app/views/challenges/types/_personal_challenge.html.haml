@@ -1,0 +1,6 @@
+.form-group
+  = form.label :target_user_id, class: 'control-label col-md-3'
+
+  .col-md-9
+    = form.select :target_user_id, (form.object.group.users - [current_user]).map{|u| [u.title, u.id]}, {}, class: 'form-control'
+

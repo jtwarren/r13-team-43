@@ -108,7 +108,7 @@ describe ChallengesController do
 
       new_workflow = @challenge.participants.first
 
-      expect(new_workflow.acceptors).not_to eq(workflow.acceptors)
+      expect(new_workflow.rejectors).not_to eq(workflow.rejectors)
     end
   end
 end

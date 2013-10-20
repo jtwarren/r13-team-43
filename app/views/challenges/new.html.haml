@@ -34,6 +34,8 @@
           %span.form-control
             = form.object.class.model_name.human
 
+      = render("challenges/types/#{form.object.class.to_s.underscore}", form: form) rescue nil
+
       .form-group
         .col-md-offset-3.col-md-9
           = form.submit 'Create challenge', class: 'btn btn-primary'

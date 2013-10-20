@@ -73,7 +73,8 @@ class ChallengesController < ApplicationController
       :description,
       :group_id,
       :_type,
-      :difficulty
+      :difficulty,
+      :target_user_id,
     ).merge({
       creator: current_user,
     })
