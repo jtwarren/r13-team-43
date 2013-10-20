@@ -1,0 +1,3 @@
+after :deploy, :updated do
+  run "cp #{current_path}/app/assets/fonts/twitter/bootstrap/* #{current_path}/public/assets/twitter/bootstrap/"
+end
