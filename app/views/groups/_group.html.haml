@@ -1,32 +1,21 @@
 %li.media{data: { group_id: group.id }}
   = link_to group_path(group), class: 'pull-left' do
-    %span.badge.count
-      = group.users.count
+    = image_tag('http://lorempixel.com/100/100/abstract/', class: 'thumbnail')
 
   .media-body
-    %h4
-      = group.name
+    %h4.media-heading
+      = link_to group_path(group) do
+        = group.name
 
     %p
       = group.description
 
-    %p
-      Created by
-
-      = render 'layouts/gravatar', email: group.creator.email
+    - group.users.each do |user|
+      = render 'layouts/gravatar', email: user.email
 
     %p
-      Created at
+      = group.challenges.count
 
-      = l(group.created_at, format: '%d %B')
+      Challenges
 
-    - if current_user.groups.include?(group)
-      = link_to leave_group_path(group), remote: true, method: :put, class: 'btn btn-primary btn-xs leave' do
-        %span.glyphicon.glyphicon-minus-sign
-
-        &nbsp;LeaveMe
-    - else
-      = link_to join_group_path(group), remote: true, method: :put, class: 'btn btn-success btn-xs join' do
-        %span.glyphicon.glyphicon-plus-sign
-
-        &nbsp;JoinMe
+    = render 'groups/actions', group: group
