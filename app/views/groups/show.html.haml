@@ -1,7 +1,7 @@
 .jumbotron
   .container
     .media
-      = image_tag('http://lorempixel.com/200/200/abstract/', class: 'thumbnail pull-left')
+      = render 'groups/image', url: @group.image_url, width: 200, height: 200, classes: 'thumbnail pull-left'
 
       .media-body
         %h1.media-heading
