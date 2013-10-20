@@ -1,0 +1,20 @@
+%h2
+  Scores
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th
+        Challenge Points
+
+      %th
+        Member
+
+  %tbody
+    - @group.users.each do |user|
+      %tr
+        %td.points
+          = user.points
+
+        %td
+          = render 'layouts/gravatar', email: user.email

@@ -6,10 +6,8 @@
     - if current_user.groups.present?
       %ul.nav.navbar-nav
         %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
-            Groups
-
-            %b.caret
+          = link_to '#', class: 'dropdown-toggle', title: 'Groups', data: { toggle: 'dropdown' } do
+            %span.glyphicon.glyphicon-th-large
 
           %ul.dropdown-menu
             - current_user.groups.each do |group|

@@ -1,0 +1,11 @@
+%h2
+  Challenges
+
+= render 'create_challenge', group: @group
+
+%ul.list-unstyled
+  = render partial: 'challenges/challenge', collection: @active_challenges
+
+  %hr
+
+  = render partial: 'challenges/challenge', collection: @inactive_challenges

@@ -1,28 +1,14 @@
 %h1
+  %span.glyphicon.glyphicon-th-large
+
   = @group.name
 
-%h2
-  Members
+%p
+  = @group.description
 
 .row
-  .col-md-12
-    %ul.list-unstyled
-      - @group.users.each do |user|
-        %li.pull-left
-          = render 'layouts/gravatar', email: user.email
+  .col-md-6
+    = render 'scores'
 
-          %br
-
-          = user.title
-
-%h2
-  Challenges
-
-= render 'create_challenge', group: @group
-
-%ul.list-unstyled
-  = render partial: 'challenges/challenge', collection: @active_challenges
-
-  %hr
-
-  = render partial: 'challenges/challenge', collection: @inactive_challenges
+  .col-md-6
+    = render 'challenges'
