@@ -38,6 +38,7 @@ end
 group :development, :test do
   gem 'pry'
   gem 'rspec-rails', '~> 2.0'
+  gem 'guard-rspec', require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'
 end
