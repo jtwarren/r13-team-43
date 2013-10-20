@@ -7,22 +7,28 @@
       ChallengeMe
 
   .navbar-collapse
-    - if current_user.groups.present?
-      %ul.nav.navbar-nav.navbar-right
-        %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', title: 'Groups', data: { toggle: 'dropdown' } do
-            %span.glyphicon.glyphicon-th-large
+    %ul.nav.navbar-nav.navbar-right
+      %li.dropdown
+        = link_to '#', class: 'dropdown-toggle', title: 'Groups', data: { toggle: 'dropdown' } do
+          %span.glyphicon.glyphicon-th-large
 
-          %ul.dropdown-menu
+        %ul.dropdown-menu
+          %li.separator
+            = link_to(groups_path) do
+              All groups
+
+          - if current_user.groups.present?
+            %li.divider
+
             - current_user.groups.each do |group|
               %li
                 = link_to group_path(group.id) do
                   = group.name
 
-        %li
-          = link_to edit_user_path(current_user), title: current_user.email, class: 'navbar-link' do
-            %span.glyphicon.glyphicon-user
+      %li
+        = link_to edit_user_path(current_user), title: current_user.email, class: 'navbar-link' do
+          %span.glyphicon.glyphicon-user
 
-        %li
-          = link_to logout_path, title: 'Logout', class: 'navbar-link' do
-            %span.glyphicon.glyphicon-off
+      %li
+        = link_to logout_path, title: 'Logout', class: 'navbar-link' do
+          %span.glyphicon.glyphicon-off
