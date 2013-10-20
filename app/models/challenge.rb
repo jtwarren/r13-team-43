@@ -4,8 +4,8 @@ class Challenge
   before_create :add_creation_log_entry
   before_create :set_activation_threshold
 
+  userstamps!
   belongs_to :group
-  belongs_to :owner, foreign_key: :owner_id, class_name: 'User'
   many :log_entries, class_name: 'ChallengeLogEntry'
 
   scope :inactive, where(status: 'inactive')
@@ -25,7 +25,7 @@ class Challenge
   many :voted_users, in: :voted_users_ids, class_name: 'User'
   key :voted_users_ids, Set
 
-  validates_presence_of :owner
+  validates_presence_of :creator
   validates_presence_of :group
 
   # mapping between internal type and human readable presentation
@@ -74,14 +74,15 @@ class Challenge
   end
 
   def allow_vote?(user)
-    !self.voted_users.include?(user)
+    inactive? &&
+    !self.voted_users.include?(user) &&
+    user.groups.include?(self.group) &&
+    user != creator
   end
 
   # when a user votes for this challenge
   def vote(voter)
-    if self.voted_users.include?(voter)
-      false
-    else
+    if allow_vote?(voter)
       self.voted_users << voter
       self.log_entries << ChallengeLogEntry.user_voted_challenge(voter)
 
@@ -89,6 +90,8 @@ class Challenge
       save!
 
       true
+    else
+      false
     end
   end
 
@@ -109,7 +112,7 @@ class Challenge
   end
 
   def add_creation_log_entry
-    self.log_entries << ChallengeLogEntry.challenge_created(owner)
+    self.log_entries << ChallengeLogEntry.challenge_created(creator)
   end
 
   def set_activation_threshold

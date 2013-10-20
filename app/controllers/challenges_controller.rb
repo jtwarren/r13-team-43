@@ -24,6 +24,12 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def vote
+    challenge = Challenge.find(params[:challenge_id])
+
+    challenge.vote(current_user)
+  end
+
   # user signals that he completed the challenge
   def complete
     challenge = Challenge.find(params[:id])
@@ -42,7 +48,7 @@ class ChallengesController < ApplicationController
       :due_date,
       :difficulty
     ).merge({
-      owner: current_user,
+      creator: current_user,
     })
   end
 end

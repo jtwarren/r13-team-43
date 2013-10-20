@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Transaction do
   let(:user) { FactoryGirl.create :user, points: 100 }
-  let(:challenge) { FactoryGirl.create :challenge, owner: user }
+  let(:challenge) { FactoryGirl.create :challenge, creator: user }
   let(:points) { 5 }
 
   describe '#update_user_points' do

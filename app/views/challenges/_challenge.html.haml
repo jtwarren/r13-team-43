@@ -10,10 +10,10 @@
     = challenge.description
 
   %span.badge
-    0
+    = challenge.votes
 
-  - if challenge.inactive?
-    = link_to '#', class: 'btn btn-primary btn-xs' do
+  - if challenge.allow_vote?(current_user)
+    = link_to challenge_vote_path(challenge), remote: true, method: :put, class: 'btn btn-primary btn-xs' do
       %span.glyphicon.glyphicon-thumbs-up
 
       Vote

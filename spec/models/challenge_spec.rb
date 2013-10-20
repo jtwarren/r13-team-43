@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Challenge do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:group) { FactoryGirl.create(:group) }
+  let(:user) { FactoryGirl.create(:user_with_group) }
+  let(:group) { user.groups.first }
   let(:challenge_params) do
     {
-      owner: user,
+      creator: user,
       group: group,
       title: 'just a challenge'
     }
@@ -41,25 +41,39 @@ describe Challenge do
   end
 
   describe '#vote' do
-    specify { subject.voted_users.should be_empty }
+    let(:voter) { FactoryGirl.create(:user, groups: [group]) }
+
+    specify { expect(subject.voted_users).to be_empty }
+    specify { expect(subject).to be_inactive }
+    specify { expect(subject).to be_allow_vote(voter) }
 
     it 'should add user to voted users' do
       expect do
-        expect(subject.vote(user)).to eq(true)
+        expect(subject.vote(voter)).to eq(true)
       end.to change(subject.voted_users, :count).by(1)
 
-      expect(subject.voted_users).to include(user)
+      expect(subject.voted_users).to include(voter)
     end
 
     it 'should not allow user to vote if he already did' do
-      subject.vote(user)
+      subject.vote(voter)
 
-      expect(subject.vote(user)).to eq(false)
+      expect(subject.vote(voter)).to eq(false)
+      expect(subject.allow_vote?(voter)).to be_false
+    end
+
+    it 'should not allow user to vote if he created the challenge' do
+      subject.stub(:creator) { voter }
+
+      expect(subject).not_to be_allow_vote(voter)
+      expect(subject.vote(voter)).to eq(false)
     end
 
     it 'should add log entry' do
+      expect(subject).to be_allow_vote(voter)
+
       expect do
-        subject.vote(user)
+        subject.vote(voter)
       end.to change(subject.log_entries, :count).by(1)
     end
 
@@ -67,20 +81,10 @@ describe Challenge do
       subject.stub(:activation_threshold) { 1 }
 
       expect do
-        subject.vote(user)
+        subject.vote(voter)
       end.to change(subject, :status).to('active')
 
       expect(subject).to be_active
-    end
-  end
-
-  describe '#allow_vote?' do
-    specify { expect(subject).to be_allow_vote(user) }
-
-    it 'should not be allowed after user voted' do
-      expect(subject.vote(user)).to be_true
-
-      expect(subject.allow_vote?(user)).to be_false
     end
   end
 

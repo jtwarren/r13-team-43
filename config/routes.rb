@@ -13,6 +13,7 @@ Challengeme::Application.routes.draw do
   resources :users
   resources :sessions
   resources :challenges do
+    put 'vote'
     put 'complete'
   end
 
