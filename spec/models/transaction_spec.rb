@@ -15,6 +15,16 @@ describe Transaction do
       expect(user.points(challenge.group)).to be(old_points + points)
     end
 
+    it 'should update users points twice' do
+      old_points = user.points(challenge.group)
+
+      Transaction.update_user_points(user, challenge, points)
+      Transaction.update_user_points(user, challenge, points)
+      user.reload
+
+      expect(user.points(challenge.group)).to be(old_points + 2 * points)
+    end
+
     it 'should create transaction record' do
       transaction = nil
 

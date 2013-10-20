@@ -33,10 +33,10 @@ class Transaction
   def store!
     save!
 
-    user_point = UserPoint.where(group_id: group.id, user_id: user.id)
+    user_point = UserPoint.where(group_id: group.id, user_id: user.id).first
 
     if user_point.present?
-      UserPoint.where(group_id: group.id, user_id: user.id).increment(points: points)
+      UserPoint.increment(user_point.id, points: points)
     else
       UserPoint.create!(group: group, user: user, points: points)
     end
