@@ -19,7 +19,6 @@ class Challenge
   key :activation_threshold, Integer, default: 1
 
   key :difficulty, Integer, default: 2
-  key :due_date, Time, default: -> { 10.days.from_now }
 
   many :voted_users, in: :voted_users_ids, class_name: 'User'
   key :voted_users_ids, Set
