@@ -25,4 +25,8 @@ class ChallengeLogEntry
     new(message: "#{acceptor.title} accepted #{completer.title} claim.")
   end
 
+  def self.user_rejected_workflow(rejector, completer)
+    new(message: "#{rejector.title} rejected #{completer.title} claim.")
+  end
+
 end

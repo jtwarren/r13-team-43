@@ -96,15 +96,15 @@ class Challenge
   end
 
   # acceptor: user who confirms
-  # user: user who
+  # user: user who claimed the challenge
   def allow_accept?(acceptor, participant_user)
-    workflow = workflow_for_user(participant_user)
+    allow_workflow?(acceptor, participant_user)
+  end
 
-    workflow.present? &&
-    workflow.available_for?(acceptor) &&
-    active? &&
-    acceptor.groups.include?(self.group) &&
-    acceptor != participant_user
+  # rejector: user who rejects
+  # user: user who claimed  the challenge
+  def allow_reject?(rejector, participant_user)
+    allow_workflow?(rejector, participant_user)
   end
 
   # when a user votes for this challenge
@@ -151,6 +151,20 @@ class Challenge
     end
   end
 
+  # a user signals that another one completed this challenge
+  def reject(rejector, participant_user)
+    if allow_reject?(rejector, participant_user)
+      workflow = workflow_for_user(participant_user)
+
+      workflow.reject(rejector)
+      self.log_entries << ChallengeLogEntry.user_rejected_workflow(rejector, participant_user)
+
+      self.save!
+    else
+      false
+    end
+  end
+
   def participant?(user)
     participants.detect do |workflow|
       workflow.creator == user
@@ -164,6 +178,16 @@ class Challenge
   end
 
   private
+
+  def allow_workflow?(workflow_user, participant_user)
+    workflow = workflow_for_user(participant_user)
+
+    workflow.present? &&
+    workflow.available_for?(workflow_user) &&
+    active? &&
+    workflow_user.groups.include?(self.group) &&
+    workflow_user != participant_user
+  end
 
   def workflow_for_user(user)
     participants.detect do |workflow|

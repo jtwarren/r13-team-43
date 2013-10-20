@@ -131,4 +131,26 @@ describe Challenge do
       expect(subject).not_to be_allow_accept(acceptor, creator)
     end
   end
+
+  describe '#reject' do
+    let(:rejector) { FactoryGirl.create(:user_with_group) }
+    let(:subject) { FactoryGirl.create(:challenge_completed, group: rejector.groups.first) }
+    let(:creator) { subject.participants.first.creator }
+
+    it 'should add a log entry' do
+      expect(subject).to be_allow_reject(rejector, creator)
+
+      expect do
+        subject.reject(rejector, creator)
+      end.to change(subject.log_entries, :count).by(1)
+    end
+
+    it 'should not allow rejecting twice' do
+      expect(subject).to be_allow_reject(rejector, creator)
+
+      subject.reject(rejector, creator)
+
+      expect(subject).not_to be_allow_reject(rejector, creator)
+    end
+  end
 end

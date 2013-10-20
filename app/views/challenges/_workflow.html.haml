@@ -5,11 +5,11 @@
     = workflow.creator.title
 
   %td
-    = link_to approve_challenge_path(challenge, workflow.creator), remote: true, method: :put, class: 'btn btn-success' do
+    = link_to accept_challenge_path(challenge, workflow.creator), remote: true, method: :put, class: 'btn btn-success' do
       %span.glyphicon.glyphicon-ok
       It's true
 
-    = link_to '#', class: 'btn btn-primary' do
+    = link_to reject_challenge_path(challenge, workflow.creator), remote: true, method: :put, class: 'btn btn-primary' do
       %span.glyphicon.glyphicon-remove
       It's a lie
 

@@ -12,5 +12,5 @@
 
   %table.table
     - challenge.participants.each do |workflow|
-      - if workflow.available_for?(current_user) &&
+      - if workflow.available_for?(current_user)
         = render 'challenges/workflow', challenge: challenge, workflow: workflow

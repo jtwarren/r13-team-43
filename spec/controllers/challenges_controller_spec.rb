@@ -80,7 +80,29 @@ describe ChallengesController do
     it 'should accept creators workflow' do
       workflow = @challenge.participants.first
 
-      put :approve, id: @challenge.id, user_id: workflow.creator, format: :js
+      put :accept, id: @challenge.id, user_id: workflow.creator, format: :js
+      expect(response).to be_success
+      @challenge.reload
+
+      new_workflow = @challenge.participants.first
+
+      expect(new_workflow.acceptors).not_to eq(workflow.acceptors)
+    end
+  end
+
+  describe '#reject' do
+    before do
+      @current_user = FactoryGirl.create(:user_with_group)
+      @challenge = FactoryGirl.create(:challenge_completed, group: @current_user.groups.first)
+
+      controller.stub(:authorize)
+      controller.stub(:current_user) { @current_user }
+    end
+
+    it 'should reject creators workflow' do
+      workflow = @challenge.participants.first
+
+      put :reject, id: @challenge.id, user_id: workflow.creator, format: :js
       expect(response).to be_success
       @challenge.reload
 
