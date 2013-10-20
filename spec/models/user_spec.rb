@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe User do
   describe '#groups' do
-    let(:user) { User.create!(email: 'test@test.com') }
-    let(:groups) { [Group.create!(name: 'test'), Group.create!(name: 'test2')] }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:groups) { FactoryGirl.create_list(:group, 2) }
 
     it 'has many groups' do
       user.groups += groups

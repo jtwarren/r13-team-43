@@ -1,10 +1,9 @@
 class User
-  JUDGE_MODE = true
-
   include MongoMapper::Document
   include ActiveModel::SecurePassword
 
-  has_secure_password unless JUDGE_MODE
+  # disabled for RailsRumble
+  # has_secure_password
 
   many :groups, in: :group_ids
   key :group_ids, Set
@@ -22,8 +21,6 @@ class User
 
   # override auth logic to allow login without password
   def authenticate(password)
-    return true if JUDGE_MODE
-
-    super(password)
+    true
   end
 end

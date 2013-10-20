@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Challenge do
-  let(:user) { User.create!(email: 'test@test.com') }
-  let(:group) { Group.create!(name: 'test group 2') }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:group) { FactoryGirl.create(:group) }
   let(:challenge_params) do
     {
       owner: user,

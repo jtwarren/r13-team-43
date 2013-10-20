@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Transaction do
-  let(:user) { User.create!(email: 'test@test.de', points: 100) }
-  let(:challenge) { Challenge.create!() }
+  let(:user) { FactoryGirl.create :user, points: 100 }
+  let(:challenge) { FactoryGirl.create :challenge, owner: user }
   let(:points) { 5 }
 
   describe '#update_user_points' do

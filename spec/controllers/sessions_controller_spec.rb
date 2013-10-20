@@ -12,7 +12,7 @@ describe SessionsController do
       end
 
       before do
-        User.create!(user_params)
+        FactoryGirl.create(:user, user_params)
       end
 
       it 'should redirect to root url' do
