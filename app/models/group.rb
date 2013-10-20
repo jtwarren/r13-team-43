@@ -6,6 +6,7 @@ class Group
 
   key :name, String, required: true
   key :description, String
+  key :image_url, String
 
   userstamps!
   timestamps!

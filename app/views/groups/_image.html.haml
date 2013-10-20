@@ -1,0 +1,8 @@
+- width = local_assigns[:width].presence || '100'
+- height = local_assigns[:height].presence || '100'
+
+- if url
+  = image_tag(url, class: 'thumbnail', width: width, height: height)
+
+- else
+  = image_tag("http://lorempixel.com/#{width}/#{height}/abstract/1", class: 'thumbnail')

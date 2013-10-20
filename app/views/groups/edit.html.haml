@@ -21,6 +21,12 @@
           = form.text_area :description, class: 'form-control'
 
       .form-group
+        = form.label :image_url, class: 'control-label col-md-3'
+
+        .col-md-9
+          = form.text_field :image_url, placeholder: 'Image URL...', class: 'form-control'
+
+      .form-group
         .col-md-offset-3.col-md-9
           = form.submit 'Save', class: 'btn btn-primary'
 

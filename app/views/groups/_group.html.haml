@@ -1,6 +1,6 @@
 %li.media{data: { group_id: group.id }}
   = link_to group_path(group), class: 'pull-left' do
-    = image_tag('http://lorempixel.com/100/100/abstract/', class: 'thumbnail')
+    = render 'groups/image', url: group.image_url
 
   .media-body
     %h4.media-heading
