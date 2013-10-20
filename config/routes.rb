@@ -4,6 +4,7 @@ Challengeme::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  get 'howto' => 'welcome#howto', as: :howto
 
   get 'sessions/new'
   get 'signup', to: 'users#new', as: 'signup'
