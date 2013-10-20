@@ -49,4 +49,23 @@ describe ChallengesController do
       end.to change(@challenge, :votes).by(1)
     end
   end
+
+  describe '#complete' do
+    before do
+      @current_user = FactoryGirl.create(:user_with_group)
+      @challenge = FactoryGirl.create(:challenge_active, group: @current_user.groups.first)
+
+      controller.stub(:authorize)
+      controller.stub(:current_user) { @current_user }
+    end
+
+    it 'should add user to participants' do
+      expect do
+        put :complete, challenge_id: @challenge.id, format: :js
+        @challenge.reload
+
+        expect(response).to be_success
+      end.to change(@challenge.participants, :count).by(1)
+    end
+  end
 end

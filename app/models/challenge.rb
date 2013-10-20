@@ -25,6 +25,10 @@ class Challenge
   many :voted_users, in: :voted_users_ids, class_name: 'User'
   key :voted_users_ids, Set
 
+  # users that completed the challenge
+  many :participants, in: :participants_ids, class_name: 'User'
+  key :participants_ids, Set
+
   validates_presence_of :creator
   validates_presence_of :group
 
@@ -73,6 +77,12 @@ class Challenge
     status == 'confirmed'
   end
 
+  def allow_completion?(user)
+    active? &&
+    user.groups.include?(self.group) &&
+    !self.participants.include?(user)
+  end
+
   def allow_vote?(user)
     inactive? &&
     !self.voted_users.include?(user) &&
@@ -96,11 +106,19 @@ class Challenge
   end
 
   # a user signals that he completed this challenge
-  def complete_by_user(user)
-    #TODO
-    self.log_entries << ChallengeLogEntry.user_completed_challenge(user)
+  def complete(user)
+    if allow_completion?(user)
+      self.participants << user
+      self.log_entries << ChallengeLogEntry.user_completed_challenge(user)
 
-    self.save!
+      save!
+    else
+      false
+    end
+  end
+
+  def participant?(user)
+    participants.include?(user)
   end
 
   private

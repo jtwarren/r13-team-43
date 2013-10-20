@@ -28,15 +28,19 @@ describe Challenge do
     end
   end
 
-  describe '#complete_by_user' do
-    before do
-      @challenge = Challenge.create!(challenge_params)
-    end
+  describe '#complete' do
+    let(:subject) { FactoryGirl.create(:challenge_active, challenge_params) }
 
     it 'should add log entry' do
       expect do
-        @challenge.complete_by_user(user)
-      end.to change(@challenge.log_entries, :count).by(1)
+        subject.complete(user)
+      end.to change(subject.log_entries, :count).by(1)
+    end
+
+    it 'should add user to participants' do
+      subject.complete(user)
+
+      expect(subject.participants).to include(user)
     end
   end
 

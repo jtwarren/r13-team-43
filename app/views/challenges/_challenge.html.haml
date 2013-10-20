@@ -17,3 +17,15 @@
       %span.glyphicon.glyphicon-thumbs-up
 
       Vote
+
+  - if challenge.active?
+    - if challenge.allow_completion?(current_user)
+      = link_to challenge_complete_path(challenge), remote: true, method: :put, class: 'btn btn-success btn-md  btn-complete-challenge' do
+        %span.glyphicon.glyphicon-ok
+        &nbsp;
+        I did it!
+    - elsif challenge.participant?(current_user)
+      %span.label.label-success
+        %span.glyphicon.glyphicon-info-sign
+        &nbsp;
+        Waiting for approval

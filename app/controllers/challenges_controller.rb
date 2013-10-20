@@ -32,9 +32,9 @@ class ChallengesController < ApplicationController
 
   # user signals that he completed the challenge
   def complete
-    challenge = Challenge.find(params[:id])
+    challenge = Challenge.find(params[:challenge_id])
 
-    challenge.complete_by_user(current_user)
+    challenge.complete(current_user)
   end
 
   private
