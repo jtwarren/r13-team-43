@@ -19,6 +19,12 @@ class Group
 
   def add_user(user)
     user.groups << self
+    user_point = UserPoint.where(group_id: self.id, user_id: user.id).first
+
+    unless user_point
+      self.user_points.create!(user: user, points: 0)
+    end
+
     user.save!
   end
 end

@@ -23,3 +23,7 @@ en:
       single_challenge: 'Single Winner'
       top_challenge: 'Top 3 Winner'
       personal_challenge: 'Personal challenge'
+
+    attributes:
+      user:
+        title: 'Display name'

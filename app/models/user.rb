@@ -11,10 +11,12 @@ class User
   key :email, String, required: true, unique: true
   key :password_digest, String
 
+  key :title, String, default: ''
+
   many :transactions
 
   def title
-    @title ||= email.match(/[^@]+/)
+    super().presence || email.match(/[^@]+/).to_s
   end
 
   # override auth logic to allow login without password
