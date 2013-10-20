@@ -65,6 +65,14 @@ class Challenge
     voted_users.count
   end
 
+  def participant_accepted?(user)
+    workflow_for_user(user).try(:accepted?)
+  end
+
+  def participant_rejected?(user)
+    workflow_for_user(user).try(:rejected?)
+  end
+
   def inactive?
     status == 'inactive'
   end

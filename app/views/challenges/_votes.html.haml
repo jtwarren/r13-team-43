@@ -15,7 +15,15 @@
       I did it!
 
   - elsif challenge.participant?(current_user)
-    %span.label.label-success
-      %span.glyphicon.glyphicon-info-sign
-      &nbsp;
-      Waiting for approval
+    - if challenge.participant_accepted?(current_user)
+      %span.label.label-success
+        Accepted!
+
+    - elsif challenge.participant_rejected?(current_user)
+      %span.label.label-primary
+        Rejected!
+
+    - else
+      %span.label.label-warning
+        Waiting for approval
+
