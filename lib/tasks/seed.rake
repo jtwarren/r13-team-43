@@ -121,6 +121,18 @@ namespace :seed do
 
       # user
       {
+        email: 'marcel.goretzki@infopark.de',
+        title: 'Marcel',
+      },
+
+      # user
+      {
+        email: 'benjamin.zimmer@infopark.de',
+        title: 'Ben',
+      },
+
+      # user
+      {
         email: 'naseleznev@list.ru',
         title: 'Naseleznev',
       },
@@ -153,6 +165,11 @@ namespace :seed do
   task :groups => :environment do
     all_groups = [
       # group
+      {
+        name: 'Rails Rumble 2013',
+        description: 'The Rails Rumble is a distributed programming competition where teams of one to four people, from all over the world, have 48 hours to build an innovative web application, with Ruby on Rails or another Rack-based Ruby web framework. After the 48 hours are up, a panel of expert judges will pick the top ten winners.',
+        image_url: 'http://s0.railsrumble.com/assets/rr-logo-small-0f67f720eb4f6852b037077b995c2770.png',
+      },
       {
         name: 'Family',
         description: 'Don\'t ask what your family can do for you, but what you can do for your family.',
@@ -222,6 +239,13 @@ namespace :seed do
         challenge.save! unless group.challenges.where(title: attr[:title]).present?
       end
     end
+
+    group = Group.where(name: 'Rails Rumble 2013').first
+    challenges = [
+      {"title"=>"Star a RailsRumble Project on GitHub", "description"=>"Visit GitHub and give at least one Rails Rumble Project a star", "_type"=>"TopChallenge", "difficulty"=>1}.symbolize_keys,
+      {"title"=>"Check 10 entries", "description"=>"Check 10 projects from the current Rails Rumble", "_type"=>"TopChallenge", "difficulty"=>2}.symbolize_keys,
+    ]
+    create_challenges(group, challenges, creator)
 
     group = Group.where(name: 'Berlin').first
     challenges = [
