@@ -124,6 +124,17 @@ describe Challenge do
       end.to change(creator, :points).by(subject.points)
     end
 
+    it 'should put challenge in finished status' do
+      expect(subject).to be_allow_accept(acceptor, creator)
+
+      expect do
+        subject.accept(acceptor, creator)
+        subject.reload
+      end.to change(subject, :status)
+
+      expect(subject).to be_finished
+    end
+
     it 'should add a log entry' do
       expect(subject).to be_allow_accept(acceptor, creator)
 

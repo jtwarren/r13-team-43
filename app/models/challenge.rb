@@ -11,7 +11,6 @@ class Challenge
   scope :inactive, where(status: 'inactive')
   scope :active, where(status: 'active')
   scope :finished, where(status: 'finished')
-  scope :confirmed, where(status: 'confirmed')
 
   key :title, String, required: true
   key :description, String
@@ -186,7 +185,8 @@ class Challenge
   private
 
   def finish
-
+    self.status = 'finished'
+    self.save!
   end
 
   def allow_workflow?(workflow_user, participant_user)
