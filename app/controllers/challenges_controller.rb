@@ -5,6 +5,12 @@ class ChallengesController < ApplicationController
     @challenge = Challenge.new(challenge_params)
   end
 
+  def copy
+    @challenge = Challenge.find(params[:id])
+
+    render :new
+  end
+
   def create
     challenge_type = challenge_params[:_type]
     challenge_type = challenge_type.safe_constantize

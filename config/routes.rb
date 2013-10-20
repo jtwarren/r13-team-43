@@ -16,6 +16,7 @@ Challengeme::Application.routes.draw do
     member do
       put 'vote'
       put 'complete'
+      get 'copy'
       put 'accept/:user_id' => 'challenges#accept', as: :accept
       put 'reject/:user_id' => 'challenges#reject', as: :reject
     end

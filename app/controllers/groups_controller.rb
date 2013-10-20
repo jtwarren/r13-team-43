@@ -11,6 +11,12 @@ class GroupsController < ApplicationController
     @active_challenges = ChallengeDecorator.decorate_collection(@group.challenges.active.all)
     @inactive_challenges = ChallengeDecorator.decorate_collection(@group.challenges.inactive.all)
     @review_challenges = ChallengeDecorator.decorate_collection(Challenge.reviews_for(@group, current_user))
+
+    finished = Challenge.finished_for(@group)
+    offset = 2
+
+    @finished_challenges_preview = ChallengeDecorator.decorate_collection(finished.limit(offset))
+    @finished_challenges_rest = ChallengeDecorator.decorate_collection(finished.offset(offset))
   end
 
   def new

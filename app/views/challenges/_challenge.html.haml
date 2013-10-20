@@ -9,24 +9,4 @@
   %p
     = challenge.description
 
-  %span.badge
-    = challenge.votes
-
-  - if challenge.allow_vote?(current_user)
-    = link_to vote_challenge_path(challenge), remote: true, method: :put, class: 'btn btn-primary btn-xs' do
-      %span.glyphicon.glyphicon-thumbs-up
-
-      Vote
-
-  - if challenge.active?
-    - if challenge.allow_completion?(current_user)
-      = link_to complete_challenge_path(challenge), remote: true, method: :put, class: 'btn btn-success btn-md  btn-complete-challenge' do
-        %span.glyphicon.glyphicon-ok
-        &nbsp;
-        I did it!
-
-    - elsif challenge.participant?(current_user)
-      %span.label.label-success
-        %span.glyphicon.glyphicon-info-sign
-        &nbsp;
-        Waiting for approval
+  = render 'challenges/votes', challenge: challenge

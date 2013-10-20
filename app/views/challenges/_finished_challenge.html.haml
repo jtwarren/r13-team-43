@@ -1,0 +1,13 @@
+%li
+  %h3
+    %span.glyphicon{class: finished_challenge.type_icon}
+
+    = finished_challenge.title
+
+  %p
+    = finished_challenge.description
+
+  = link_to copy_challenge_path(finished_challenge), class: 'btn btn-success btn-md' do
+    %span.glyphicon.glyphicon-repeat
+
+    &nbsp;Copy this challenge

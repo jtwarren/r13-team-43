@@ -1,11 +1,14 @@
 %h2
   Challenges
 
+%hr
+
 = render 'create_challenge', group: @group
 
 %ul.list-unstyled
-  = render partial: 'challenges/challenge', collection: @active_challenges
+  - if @active_challenges.present?
+    = render partial: 'challenges/challenge', collection: @active_challenges
 
-  %hr
+    %hr
 
   = render partial: 'challenges/challenge', collection: @inactive_challenges

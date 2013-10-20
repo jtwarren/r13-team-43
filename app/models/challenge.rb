@@ -35,6 +35,10 @@ class Challenge
     end
   end
 
+  def self.finished_for(group)
+    finished.where(group_id: group.id)
+  end
+
   # mapping between internal type and human readable presentation
   def type_options
     {
