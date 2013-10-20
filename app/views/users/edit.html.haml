@@ -4,7 +4,10 @@
       = t('.title')
 
 .row
-  .col-md-6.col-md-offset-3
+  .col-md-3
+    = render 'layouts/gravatar', email: @user.email, size: 256
+
+  .col-md-6
     = form_for @user do |form|
       - if @user.errors.any?
         .alert.alert-danger
@@ -12,12 +15,6 @@
             - @user.errors.full_messages.each do |message|
               %li
                 = message
-
-      .form-group
-        = form.label :gravatar
-
-        .controls
-          = render 'layouts/gravatar', email: form.object.email
 
       .form-group
         = form.label :email
