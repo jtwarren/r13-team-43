@@ -13,8 +13,12 @@ en:
       delete_account: 'Delete account'
       delete_confirmation: 'Really delete this account?'
 
+  challenges:
+    status:
+      left: '%{count} of %{limit} accepted'
+
   mongo_mapper:
     models:
       single_challenge: 'Single Winner'
-      top_challenge: 'Top X Winner'
+      top_challenge: 'Top 3 Winner'
       personal_challenge: 'Personal challenge'

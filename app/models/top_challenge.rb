@@ -1,6 +1,10 @@
 class TopChallenge < Challenge
   key :limit, Integer, default: 3
 
+  def accepted_count
+    accepted_participants.count
+  end
+
   def finished?
     participants.present? &&
     accepted_participants.count == limit

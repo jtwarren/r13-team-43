@@ -5,3 +5,9 @@
 - else
   %span.label.label-success
     = challenge.status
+
+  - if challenge.is_a?(TopChallenge)
+    &nbsp;
+    %span.label.label-success
+      = t('.left', count: challenge.accepted_count, limit: challenge.limit)
+
