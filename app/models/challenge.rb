@@ -145,6 +145,12 @@ class Challenge
       workflow.accept(acceptor)
       self.log_entries << ChallengeLogEntry.user_accepted_workflow(acceptor, participant_user)
 
+      if workflow.accepted?
+        Transaction.update_user_points(participant_user, self, points)
+      end
+
+      finish if finished?
+
       self.save!
     else
       false
@@ -179,14 +185,18 @@ class Challenge
 
   private
 
+  def finish
+
+  end
+
   def allow_workflow?(workflow_user, participant_user)
     workflow = workflow_for_user(participant_user)
 
     workflow.present? &&
     workflow.available_for?(workflow_user) &&
+    # TODO check scenarios?!
     active? &&
-    workflow_user.groups.include?(self.group) &&
-    workflow_user != participant_user
+    workflow_user.groups.include?(self.group)
   end
 
   def workflow_for_user(user)
@@ -219,5 +229,9 @@ class Challenge
     if votes >= activation_threshold
       activate
     end
+  end
+
+  def finished?
+    raise NotImplementedError
   end
 end

@@ -115,6 +115,15 @@ describe Challenge do
     let(:subject) { FactoryGirl.create(:challenge_completed, group: acceptor.groups.first) }
     let(:creator) { subject.participants.first.creator }
 
+    it 'should increase users points' do
+      expect(subject).to be_allow_accept(acceptor, creator)
+
+      expect do
+        subject.accept(acceptor, creator)
+        creator.reload
+      end.to change(creator, :points).by(subject.points)
+    end
+
     it 'should add a log entry' do
       expect(subject).to be_allow_accept(acceptor, creator)
 

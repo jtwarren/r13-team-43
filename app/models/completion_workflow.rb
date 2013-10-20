@@ -16,11 +16,12 @@ class CompletionWorkflow
   def available_for?(user)
     !acceptors.include?(user) &&
     !rejectors.include?(user) &&
+    !decided? &&
     creator != user
   end
 
-  def accepted?(user)
-    acceptors.include?(user)
+  def accepted?
+    acceptors.present?
   end
 
   # another user approves that the creator completed the challenge
@@ -29,13 +30,17 @@ class CompletionWorkflow
     self.save!
   end
 
-  def rejected?(user)
-    rejectors.include?(user)
+  def rejected?
+    rejectors.present?
   end
 
   # another user approves that the creator completed the challenge
   def reject(user)
     self.rejectors << user
     self.save!
+  end
+
+  def decided?
+    accepted? || rejected?
   end
 end

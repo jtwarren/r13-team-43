@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :challenge do
+  factory :challenge, class: SingleChallenge do
     association :creator, factory: :user
     sequence(:title) {|n| "Challenge Nr #{n}"}
     group
