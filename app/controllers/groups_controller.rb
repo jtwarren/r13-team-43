@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   before_action :authenticate, only: [:edit, :update]
 
   def index
-    @groups = Group.all
+    @groups = Group.all.sort{|a,b| a.name.downcase <=> b.name.downcase}
   end
 
   def show

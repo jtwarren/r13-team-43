@@ -20,7 +20,7 @@
           - if current_user.groups.present?
             %li.divider
 
-            - current_user.groups.each do |group|
+            - current_user.groups.sort{|a,b| a.name.downcase <=> b.name.downcase}.each do |group|
               %li
                 = link_to group_path(group.id) do
                   = group.name
