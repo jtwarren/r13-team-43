@@ -5,10 +5,12 @@
 
 %table.table.table-striped
   %tbody
-    - @group.users.each do |user|
+    - @group.users.sort_by(&:points).reverse.each do |user|
       %tr
         %td.points
           = user.points
 
         %td
           = render 'layouts/gravatar', email: user.email
+
+          = user.title

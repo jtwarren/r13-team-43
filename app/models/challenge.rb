@@ -4,6 +4,7 @@ class Challenge
   before_create :add_creation_log_entry
   before_create :set_activation_threshold
 
+  timestamps!
   userstamps!
   belongs_to :group
   many :log_entries, class_name: 'ChallengeLogEntry'

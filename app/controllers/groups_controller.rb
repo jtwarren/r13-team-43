@@ -8,8 +8,8 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @active_challenges = ChallengeDecorator.decorate_collection(@group.challenges.active.all)
-    @inactive_challenges = ChallengeDecorator.decorate_collection(@group.challenges.inactive.all)
+    @active_challenges = ChallengeDecorator.decorate_collection(@group.challenges.active.sort(:created_at.desc).all)
+    @inactive_challenges = ChallengeDecorator.decorate_collection(@group.challenges.sort(:created_at.desc).inactive.all)
     @review_challenges = ChallengeDecorator.decorate_collection(Challenge.reviews_for(@group, current_user))
 
     finished = Challenge.finished_for(@group)
