@@ -1,25 +1,14 @@
-.jumbotron
-  %h1
-    ChallengeMe
+
+
+.logo
+  = image_tag('ribbon_text.png')
 
 .row
-  .col-md-6.col-md-offset-2
-    = form_tag sessions_path, class: 'form-horizontal' do
+  .col-md-6.col-md-offset-3
+    = form_tag sessions_path, class: '' do
       .form-group
-        = label_tag :email, nil, class: 'control-label col-md-3'
-
-        .col-md-9
-          = email_field_tag :email, params[:email], required: true, class: 'form-control'
-
-          %p.help-block
-            = t('.judge_notice')
+        = label_tag :email, nil, class: 'control-label sr-only'
+        = email_field_tag :email, params[:email], placeholder: 'Your email adress...', required: true, class: 'form-control'
 
       .form-group
-        = label_tag :password, nil, class: 'control-label col-md-3'
-
-        .col-md-9
-          = password_field_tag :password, nil, class: 'form-control'
-
-      .form-group
-        .col-md-offset-3.col-md-9
-          = submit_tag('Log in', class: 'btn btn-primary')
+        = submit_tag('Enter ChallengeMe', class: 'btn btn-primary btn-lg')

@@ -12,7 +12,3 @@ en:
       title: 'Your profile'
       delete_account: 'Delete account'
       delete_confirmation: 'Really delete this account?'
-
-  sessions:
-    new:
-      judge_notice: 'You can login simply using your email address without a password.'
