@@ -21,7 +21,7 @@ en:
   mongo_mapper:
     models:
       single_challenge: 'Single Winner'
-      top_challenge: 'Top 3 Winner'
+      top_challenge: 'TopX Winner'
       personal_challenge: 'Personal challenge'
 
     attributes:

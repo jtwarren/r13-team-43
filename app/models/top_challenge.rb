@@ -1,6 +1,4 @@
 class TopChallenge < Challenge
-  key :limit, Integer, default: 3
-
   def accepted_count
     accepted_participants.count
   end
@@ -12,6 +10,12 @@ class TopChallenge < Challenge
 
   def points
     1 * difficulty
+  end
+
+  def limit
+    value = (group.users.count * 0.4).to_i
+
+    [value, 1].max
   end
 
   private
