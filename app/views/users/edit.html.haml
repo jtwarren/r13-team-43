@@ -32,8 +32,14 @@
         .controls
           %input.btn.btn-primary{name: "commit", type: "submit", value: "Save profile"}
 
-
           = link_to @user, method: :delete, class: 'btn btn-primary pull-right', confirm: t('.delete_confirmation') do
             %i.glyphicon.glyphicon-trash
 
             = t('.delete_account')
+
+      .form-group
+        %h2
+          Your groups and points
+
+        %ul.list-unstyled
+          = render partial: 'group_point', collection: UserPoint.where(user_id: @user.id).sort(:points.desc).to_a, as: :group_point

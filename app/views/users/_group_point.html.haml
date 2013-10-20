@@ -1,0 +1,16 @@
+%li.media
+  %a.pull-left{href: group_path(group_point.group)}
+    = render 'groups/image', url: group_point.group.image_url, width: 48, height: 48
+
+  .media-body
+    %h4.media-heading
+      %p
+        %a{href: group_path(group_point.group)}
+          = group_point.group.name
+
+    %p
+      %span.points
+        = group_point.points
+
+      points
+
