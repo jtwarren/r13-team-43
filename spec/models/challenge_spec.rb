@@ -43,6 +43,17 @@ describe Challenge do
       subject.reload
       expect(subject).to be_participant(user)
     end
+
+    it 'should not allow completion twice' do
+      expect(subject.participants.count).to eq(0)
+
+      subject.complete(user)
+      subject.reload
+      subject.complete(user)
+      subject.reload
+
+      expect(subject.participants.count).to eq(1)
+    end
   end
 
   describe '#vote' do

@@ -83,8 +83,8 @@ class Challenge
 
   def allow_completion?(user)
     active? &&
-    user.groups.include?(self.group) &&
-    !self.participants.include?(user)
+    workflow_for_user(user).nil? &&
+    user.groups.include?(self.group)
   end
 
   def allow_vote?(user)

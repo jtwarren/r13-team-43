@@ -53,8 +53,8 @@ class ChallengesController < ApplicationController
     @challenge = Challenge.find(params[:id])
     @creator = User.find(params[:user_id])
 
-    if @challenge.allow_accept?(current_user, @creator)
-      @challenge.accept(current_user, @creator)
+    if @challenge.allow_reject?(current_user, @creator)
+      @challenge.reject(current_user, @creator)
     else
       render text: 'invalid challenge or user', status: :not_accepted
     end
