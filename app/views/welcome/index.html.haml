@@ -13,6 +13,8 @@
     %h2
       Your challenge groups
 
+    %hr
+
     %ul.media-list
       = render partial: 'groups/group', collection: current_user.groups
 
@@ -24,6 +26,8 @@
       %small
         = link_to groups_path do
           See all groups!
+
+    %hr
 
     %ul.media-list
       = render partial: 'groups/group', collection: Group.recent.all - current_user.groups
