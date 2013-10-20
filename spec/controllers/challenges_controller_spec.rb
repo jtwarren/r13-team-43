@@ -11,7 +11,7 @@ describe ChallengesController do
         {
           title: 'Test',
           group_id: user.groups.first.id,
-          _type: 'PersonalChallenge',
+          _type: 'TopChallenge',
         }
       end
 
