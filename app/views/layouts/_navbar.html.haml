@@ -15,21 +15,12 @@
                 = link_to group_path(group.id) do
                   = group.name
 
-    %ul.nav.navbar-nav.navbar-right
-      %li
-        - if current_user
-          %p.navbar-text
-            %i.glyphicon.glyphicon-user
+    - if current_user
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          = link_to edit_user_path(current_user), title: current_user.email, class: 'navbar-link' do
+            %span.glyphicon.glyphicon-user
 
-            = link_to current_user.email, edit_user_path(current_user)
-
-            = link_to logout_path do
-              %i.glyphicon.glyphicon-off{ :title => 'Logout' }
-
-        - else
-          %p.navbar-text
-            = link_to 'Sign Up', signup_path
-
-            or
-
-            = link_to 'Log In', login_path
+        %li
+          = link_to logout_path, title: 'Logout', class: 'navbar-link' do
+            %span.glyphicon.glyphicon-off
