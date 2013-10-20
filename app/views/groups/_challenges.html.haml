@@ -5,10 +5,8 @@
 
 = render 'create_challenge', group: @group
 
-%ul.list-unstyled
+%ul.list-unstyled.active-challenges
   - if @active_challenges.present?
     = render partial: 'challenges/challenge', collection: @active_challenges
-
-    %hr
 
   = render partial: 'challenges/challenge', collection: @inactive_challenges
