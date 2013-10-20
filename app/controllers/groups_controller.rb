@@ -21,6 +21,9 @@ class GroupsController < ApplicationController
     attributes[:creator] = current_user
     @group = Group.create(attributes)
 
+    # The creator of the group is automatically added to the group.
+    @group.add_user(current_user)
+
     redirect_to groups_path, notice: 'Group successfully created.'
   end
 
@@ -36,9 +39,7 @@ class GroupsController < ApplicationController
   end
 
   def join
-    current_user.groups << @group
-
-    current_user.save!
+    @group.add_user(current_user)
 
     render layout: false
   end

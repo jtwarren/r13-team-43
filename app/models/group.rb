@@ -14,4 +14,9 @@ class Group
   def users
     User.where(group_ids: id).all
   end
+
+  def add_user(user)
+    user.groups << self
+    user.save!
+  end
 end
